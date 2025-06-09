@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MOP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'metodo_grafico' %}">Método Gráfico</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'metodo_simplex' %}">Método Simplex</a></li>
+      </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Idioma</a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Español</a></li>
+            <li><a class="dropdown-item" href="#">English</a></li>
+          </ul>
+        </li>
+        <li class="nav-item d-flex align-items-center ms-3">
+          <div class="form-check form-switch text-light">
+            <input class="form-check-input" type="checkbox" id="modeSwitch">
+            <label class="form-check-label" for="modeSwitch">Modo claro</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const switchInput = document.getElementById('modeSwitch');
+    switchInput.addEventListener('change', function () {
+      const label = document.querySelector('label[for="modeSwitch"]');
+      if (this.checked) {
+        document.body.classList.add('bg-dark', 'text-light');
+        label.textContent = 'Modo oscuro';
+      } else {
+        document.body.classList.remove('bg-dark', 'text-light');
+        label.textContent = 'Modo claro';
+      }
+    });
+  });
+</script>
