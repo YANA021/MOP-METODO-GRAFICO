@@ -163,6 +163,8 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
 
     if not poly.is_empty and hasattr(poly, 'exterior'):
         xs, ys = poly.exterior.xy
+        xs = list(xs)
+        ys = list(ys)
         fig.add_trace(go.Scatter(x=xs, y=ys, fill='toself', name='Región factible', opacity=0.3))
 
     x_opt, y_opt = opt_points[0]
