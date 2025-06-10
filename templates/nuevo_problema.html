@@ -88,6 +88,31 @@
   {% elif resultado.status == 'inviable' %}
   <p class="text-danger">Problema sin solución factible</p>
   {% endif %}
+  {% if post_data %}
+  <div class="mt-3 d-flex gap-2">
+    <form method="post" action="{% url 'exportar_resultado' 'pdf' %}">
+      {% csrf_token %}
+      {% for k, v in post_data.items %}
+      <input type="hidden" name="{{ k }}" value="{{ v }}">
+      {% endfor %}
+      <button class="btn btn-outline-primary" type="submit">Exportar PDF</button>
+    </form>
+    <form method="post" action="{% url 'exportar_resultado' 'excel' %}">
+      {% csrf_token %}
+      {% for k, v in post_data.items %}
+      <input type="hidden" name="{{ k }}" value="{{ v }}">
+      {% endfor %}
+      <button class="btn btn-outline-primary" type="submit">Exportar Excel</button>
+    </form>
+    <form method="post" action="{% url 'exportar_resultado' 'word' %}">
+      {% csrf_token %}
+      {% for k, v in post_data.items %}
+      <input type="hidden" name="{{ k }}" value="{{ v }}">
+      {% endfor %}
+      <button class="btn btn-outline-primary" type="submit">Exportar Word</button>
+    </form>
+  </div>
+  {% endif %}
 </div>
 {% endif %}
 {% endblock %}
