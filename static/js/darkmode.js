@@ -10,15 +10,16 @@
     }
   }
 
+  // Apply preference as soon as the script loads
+  const savedPreference = localStorage.getItem('darkMode');
+  const darkEnabledInit = savedPreference === 'true';
+  applyDarkMode(darkEnabledInit);
+
   document.addEventListener('DOMContentLoaded', function () {
     const switchInput = document.getElementById('modeSwitch');
     if (!switchInput) return;
 
-    const savedPreference = localStorage.getItem('darkMode');
-    const darkEnabled = savedPreference === 'true';
-
-    switchInput.checked = darkEnabled;
-    applyDarkMode(darkEnabled);
+    switchInput.checked = darkEnabledInit;
 
     switchInput.addEventListener('change', function () {
       localStorage.setItem('darkMode', this.checked);
