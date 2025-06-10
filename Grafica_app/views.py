@@ -135,7 +135,6 @@ def exportar_resultado(request, formato):
 
     if formato == 'pdf':
         from io import BytesIO
-        from django.template.loader import render_to_string
         from xhtml2pdf import pisa
         import base64
 
@@ -145,17 +144,40 @@ def exportar_resultado(request, formato):
         except Exception:
             grafica_b64 = None
 
-        html = render_to_string(
-            'export_resultado.html',
-            {
-                'objetivo': objetivo_text,
-                'coef_x1': problema['coef_x1'],
-                'coef_x2': problema['coef_x2'],
-                'restricciones': problema['restricciones'],
-                'resultado': resultado,
-                'grafica_b64': grafica_b64,
-            }
+        rows = "".join(
+            f"<tr><td>{r['coef_x1']}</td><td>{r['coef_x2']}</td><td>{r['operador']}</td><td>{r['valor']}</td></tr>"
+            for r in problema['restricciones']
         )
+
+        img_html = (
+            f"<div><img src='data:image/png;base64,{grafica_b64}' style='width:400px;'/></div>"
+            if grafica_b64
+            else ""
+        )
+
+        html = f"""<!DOCTYPE html>
+        <html lang='es'>
+        <head>
+          <meta charset='utf-8'>
+          <style>
+            table {{ border-collapse: collapse; width: 100%; }}
+            th, td {{ border: 1px solid #333; padding: 4px; }}
+          </style>
+        </head>
+        <body>
+          <h1>Resultado del Problema PL</h1>
+          <p><strong>Objetivo:</strong> {objetivo_text}</p>
+          <p><strong>Funci&oacute;n objetivo:</strong> Z = {problema['coef_x1']}x1 + {problema['coef_x2']}x2</p>
+          <h2>Restricciones</h2>
+          <table>
+            <tr><th>Coef x1</th><th>Coef x2</th><th>Operador</th><th>Valor</th></tr>
+            {rows}
+          </table>
+          <h2>Soluci&oacute;n &oacute;ptima</h2>
+          <p>x1 = {resultado['x']:.2f}, x2 = {resultado['y']:.2f}, Z = {resultado['z']:.2f}</p>
+          {img_html}
+        </body>
+        </html>"""
         buffer = BytesIO()
         pisa.CreatePDF(html, dest=buffer)
         response = HttpResponse(buffer.getvalue(), content_type='application/pdf')
