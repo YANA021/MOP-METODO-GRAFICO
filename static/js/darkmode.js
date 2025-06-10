@@ -2,10 +2,12 @@
   function applyDarkMode(enabled) {
     const label = document.querySelector('label[for="modeSwitch"]');
     if (enabled) {
-      document.body.classList.add('bg-dark', 'text-light');
+      document.body.classList.add('dark-mode', 'bg-dark', 'text-light');
+      window.plotlyTemplate = 'plotly_dark';
       if (label) label.textContent = 'Modo oscuro';
     } else {
-      document.body.classList.remove('bg-dark', 'text-light');
+      document.body.classList.remove('dark-mode', 'bg-dark', 'text-light');
+      window.plotlyTemplate = 'plotly';
       if (label) label.textContent = 'Modo claro';
     }
   }
