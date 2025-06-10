@@ -75,10 +75,15 @@ WSGI_APPLICATION = 'Proyecto_Grafico.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'grafico_db',        
+        'USER': 'postgres',          
+        'PASSWORD': '231409', 
+        'HOST': 'localhost',
+        'PORT': '5432',             
     }
 }
+
 
 
 # Password validation
