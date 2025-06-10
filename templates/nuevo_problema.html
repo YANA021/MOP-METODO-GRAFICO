@@ -88,11 +88,6 @@
   {% elif resultado.status == 'inviable' %}
   <p class="text-danger">Problema sin solución factible</p>
   {% endif %}
-  <div class="mt-3">
-    <a href="{% url 'exportar_resultado' 'pdf' %}" class="btn btn-outline-secondary me-2">Exportar a PDF</a>
-    <a href="{% url 'exportar_resultado' 'excel' %}" class="btn btn-outline-secondary me-2">Exportar a Excel</a>
-    <a href="{% url 'exportar_resultado' 'word' %}" class="btn btn-outline-secondary">Exportar a Word</a>
-  </div>
 </div>
 {% endif %}
 {% endblock %}
