@@ -177,5 +177,6 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         'x': x_opt,
         'y': y_opt,
         'z': opt_val,
-        'grafica': fig.to_html(full_html=False)
+        'grafica': fig.to_html(full_html=False),
+        'fig': fig
     }
