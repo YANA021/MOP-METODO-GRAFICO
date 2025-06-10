@@ -2,23 +2,26 @@
   function applyDarkMode(enabled) {
     const label = document.querySelector('label[for="modeSwitch"]');
     if (enabled) {
-      document.body.classList.add('bg-dark', 'text-light');
+      document.body.classList.add('dark-mode', 'bg-dark', 'text-light');
+      window.plotlyTemplate = 'plotly_dark';
       if (label) label.textContent = 'Modo oscuro';
     } else {
-      document.body.classList.remove('bg-dark', 'text-light');
+      document.body.classList.remove('dark-mode', 'bg-dark', 'text-light');
+      window.plotlyTemplate = 'plotly';
       if (label) label.textContent = 'Modo claro';
     }
   }
+
+  // Apply preference as soon as the script loads
+  const savedPreference = localStorage.getItem('darkMode');
+  const darkEnabledInit = savedPreference === 'true';
+  applyDarkMode(darkEnabledInit);
 
   document.addEventListener('DOMContentLoaded', function () {
     const switchInput = document.getElementById('modeSwitch');
     if (!switchInput) return;
 
-    const savedPreference = localStorage.getItem('darkMode');
-    const darkEnabled = savedPreference === 'true';
-
-    switchInput.checked = darkEnabled;
-    applyDarkMode(darkEnabled);
+    switchInput.checked = darkEnabledInit;
 
     switchInput.addEventListener('change', function () {
       localStorage.setItem('darkMode', this.checked);
