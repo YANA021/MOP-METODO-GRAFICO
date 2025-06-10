@@ -109,9 +109,11 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     candidates = [v for v in _candidate_vertices(restr) if _satisfies(v, restr)]
 
     if not candidates:
+        fig = go.Figure()
         return {
             'status': 'inviable',
-            'grafica': go.Figure().to_html(full_html=False)
+            'grafica': fig.to_html(full_html=False),
+            'figure': fig,
         }
 
     # Evaluate objective function
@@ -179,5 +181,6 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         'x': x_opt,
         'y': y_opt,
         'z': opt_val,
-        'grafica': fig.to_html(full_html=False)
+        'grafica': fig.to_html(full_html=False),
+        'figure': fig,
     }

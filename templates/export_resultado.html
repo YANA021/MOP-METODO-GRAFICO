@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #333; padding: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Resultado del Problema PL</h1>
+  <p><strong>Objetivo:</strong> {{ objetivo }}</p>
+  <p><strong>Funci&oacute;n objetivo:</strong> Z = {{ coef_x1 }}x1 + {{ coef_x2 }}x2</p>
+  <h2>Restricciones</h2>
+  <table>
+    <tr><th>Coef x1</th><th>Coef x2</th><th>Operador</th><th>Valor</th></tr>
+    {% for r in restricciones %}
+    <tr>
+      <td>{{ r.coef_x1 }}</td>
+      <td>{{ r.coef_x2 }}</td>
+      <td>{{ r.operador }}</td>
+      <td>{{ r.valor }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h2>Soluci&oacute;n &oacute;ptima</h2>
+  <p>x1 = {{ resultado.x|floatformat:2 }}, x2 = {{ resultado.y|floatformat:2 }}, Z = {{ resultado.z|floatformat:2 }}</p>
+  {% if grafica_b64 %}
+  <div><img src="data:image/png;base64,{{ grafica_b64 }}" style="width:400px;"/></div>
+  {% endif %}
+</body>
+</html>
