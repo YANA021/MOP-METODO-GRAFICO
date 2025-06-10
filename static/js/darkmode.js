@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+(function () {
   const switchInput = document.getElementById('modeSwitch');
   if (!switchInput) return;
   switchInput.addEventListener('change', function () {
@@ -11,4 +11,4 @@ document.addEventListener('DOMContentLoaded', function () {
       if (label) label.textContent = 'Modo claro';
     }
   });
-});
+})();
