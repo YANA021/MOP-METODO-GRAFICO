@@ -74,4 +74,20 @@
   </div>
 </form>
 <script src="{% static 'js/restricciones.js' %}"></script>
+{% if grafica %}
+<div class="mt-4">{{ grafica|safe }}</div>
+{% endif %}
+{% if resultado %}
+<div class="mt-3">
+  <h5>Resultado óptimo</h5>
+  <p>x₁ = {{ resultado.x|floatformat:2 }}, x₂ = {{ resultado.y|floatformat:2 }}, Z = {{ resultado.z|floatformat:2 }}</p>
+  {% if resultado.status == 'multiple' %}
+  <p class="text-warning">Solución múltiple</p>
+  {% elif resultado.status == 'no acotada' %}
+  <p class="text-warning">Solución no acotada</p>
+  {% elif resultado.status == 'inviable' %}
+  <p class="text-danger">Problema sin solución factible</p>
+  {% endif %}
+</div>
+{% endif %}
 {% endblock %}
