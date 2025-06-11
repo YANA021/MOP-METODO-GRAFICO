@@ -8,6 +8,7 @@
 {% block content %}
 <div class="register-page">
   <form class="register-container" method="post">
+     {% csrf_token %}
     <h2 class="text-center mb-4">{{ title }}</h2>
     <div class="mb-3 form-field">
       <input type="text" class="form-control" placeholder="{{ name_placeholder }}" required>
