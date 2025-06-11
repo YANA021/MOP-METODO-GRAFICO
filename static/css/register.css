@@ -1,0 +1,61 @@
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: #e9f3ff;
+}
+
+.register-container {
+    background: #292929;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.4);
+    font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+}
+
+.register-container h2 {
+    font-weight: 600;
+}
+
+.form-field {
+    position: relative;
+}
+
+.form-field input {
+    width: 100%;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    padding-right: 2.5rem;
+}
+
+.form-field input:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
+}
+
+.field-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.btn-primary {
+    border-radius: 2rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0.5rem 1rem rgba(13,110,253,0.4);
+}
+
+.register-container a:hover {
+    text-decoration: underline;
+}
