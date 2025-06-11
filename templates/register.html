@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="register-page">
+  <form class="register-container" method="post">
+    <h2 class="text-center mb-4">{{ title }}</h2>
+    <div class="mb-3 form-field">
+      <input type="text" class="form-control" placeholder="{{ name_placeholder }}" required>
+      <span class="field-icon">👤</span>
+    </div>
+    <div class="mb-3 form-field">
+      <input type="text" class="form-control" placeholder="{{ username_placeholder }}" required>
+      <span class="field-icon">👤</span>
+    </div>
+    <div class="mb-3 form-field">
+      <input type="email" class="form-control" placeholder="{{ email_placeholder }}" required>
+      <span class="field-icon">📧</span>
+    </div>
+    <div class="mb-4 form-field">
+      <input type="password" class="form-control" placeholder="{{ password_placeholder }}" required>
+      <span class="field-icon">🔒</span>
+    </div>
+    <div class="d-grid mb-3">
+      <button class="btn btn-primary" type="submit">{{ button_text }}</button>
+    </div>
+    <p class="text-center mb-0">{{ question_text }} <a href="#" class="text-warning text-decoration-none">{{ login_text }}</a></p>
+  </form>
+</div>
+{% endblock %}
