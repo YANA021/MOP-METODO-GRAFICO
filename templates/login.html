@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Iniciar sesión{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block content %}
+<div class="login-page">
+  <form class="login-container" method="post">
+    <h2 class="text-center mb-4">Iniciar sesión</h2>
+    <div class="mb-3 input-group">
+      <input type="text" class="form-control" placeholder="Usuario" required>
+      <span class="input-group-text">👤</span>
+    </div>
+    <div class="mb-3 input-group">
+      <input type="password" id="password" class="form-control" placeholder="Contraseña" required>
+      <span class="input-group-text">🔒</span>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="showPassword">
+        <label class="form-check-label" for="showPassword">Ver contraseña</label>
+      </div>
+      <a href="#" class="small text-decoration-none">¿Contraseña olvidada?</a>
+    </div>
+    <div class="d-grid mb-3">
+      <button class="btn btn-primary" type="submit">Entrar</button>
+    </div>
+    <p class="text-center text-success mb-2">Entrar como invitado</p>
+    <p class="text-center mb-0">¿No tienes una cuenta? <a href="#" class="text-warning text-decoration-none">Registrarse</a></p>
+  </form>
+</div>
+<script>
+  document.getElementById('showPassword').addEventListener('change', function () {
+    const pwd = document.getElementById('password');
+    pwd.type = this.checked ? 'text' : 'password';
+  });
+</script>
+{% endblock %}
