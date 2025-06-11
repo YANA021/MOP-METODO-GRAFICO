@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
 
 class ProblemaPLForm(forms.Form):
     OBJETIVO_CHOICES = [
@@ -30,3 +32,43 @@ class ProblemaPLForm(forms.Form):
             if res.get('operador') not in ['<=', '>=', '=']:
                 raise forms.ValidationError('Operador invalido')
         return parsed
+
+
+
+
+class StyledAuthenticationForm(AuthenticationForm):
+    """Authentication form with Bootstrap styling."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Usuario'}
+        )
+        self.fields['password'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Contraseña', 'id': 'password'}
+        )
+
+
+class StyledUserCreationForm(UserCreationForm):
+    """User creation form with email field and Bootstrap styling."""
+
+    email = forms.EmailField(required=True)
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Usuario'}
+        )
+        self.fields['email'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Email'}
+        )
+        self.fields['password1'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Contraseña'}
+        )
+        self.fields['password2'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'Confirmar contraseña'}
+        )

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import ProblemaPLForm
 from .models import ProblemaPL
@@ -7,6 +7,13 @@ import io
 from openpyxl import Workbook
 from docx import Document
 from docx.shared import Inches
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import (
+    ProblemaPLForm,
+    StyledAuthenticationForm,
+    StyledUserCreationForm,
+)
 
 
 def metodo_grafico(request):
@@ -107,3 +114,37 @@ def exportar_resultado(request, formato):
     response = HttpResponse(buffer.read(), content_type=content_type)
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
     return response
+
+
+
+
+def login_view(request):
+    """Handle user authentication."""
+    if request.method == 'POST':
+        form = StyledAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            return redirect('home')
+    else:
+        form = StyledAuthenticationForm(request)
+    return render(request, 'login.html', {'form': form})
+
+
+def register(request):
+    """Create a new user account."""
+    if request.method == 'POST':
+        form = StyledUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('home')
+    else:
+        form = StyledUserCreationForm()
+    context = {
+        'form': form,
+        'title': 'Registro',
+        'button_text': 'Registrarse',
+        'question_text': '¿Ya tienes una cuenta?',
+        'login_text': 'Iniciar sesión',
+    }
+    return render(request, 'register.html', context)
