@@ -75,10 +75,8 @@ WSGI_APPLICATION = 'Proyecto_Grafico.wsgi.application'
 
 import os
 
-DB_ENGINE = os.environ.get("DB_ENGINE", "sqlite").lower()
 
-if DB_ENGINE == "postgres":
-   DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'grafico_db',
@@ -88,6 +86,7 @@ if DB_ENGINE == "postgres":
         'PORT': '5432',
     }
 }
+
 
 
 
