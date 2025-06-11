@@ -73,16 +73,28 @@ WSGI_APPLICATION = 'Proyecto_Grafico.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'grafico_db',        
-        'USER': 'postgres',          
-        'PASSWORD': '231409', 
-        'HOST': 'localhost',
-        'PORT': '5432',             
+import os
+
+DB_ENGINE = os.environ.get("DB_ENGINE", "sqlite").lower()
+
+if DB_ENGINE == "postgres":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('POSTGRES_DB', 'grafico_db'),
+            'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '231409'),
+            'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 
