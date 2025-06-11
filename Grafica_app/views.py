@@ -64,7 +64,10 @@ def exportar_resultado(request, formato):
     buffer = io.BytesIO()
 
     if formato == 'pdf':
-        buffer.write(fig.to_image(format='pdf'))
+        try:
+            buffer.write(fig.to_image(format='pdf'))
+        except Exception as e:
+            return HttpResponse(f'Error generando PDF: {e}', status=500)
         content_type = 'application/pdf'
         filename = 'resultado.pdf'
     elif formato == 'excel':
@@ -72,6 +75,14 @@ def exportar_resultado(request, formato):
         ws = wb.active
         ws.append(['x1', 'x2', 'Z'])
         ws.append([resultado['x'], resultado['y'], resultado['z']])
+        try:
+            from openpyxl.drawing.image import Image as XLImage
+            img_stream = io.BytesIO(fig.to_image(format='png'))
+            img = XLImage(img_stream)
+            img.anchor = 'E2'
+            ws.add_image(img)
+        except Exception:
+            pass
         wb.save(buffer)
         content_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         filename = 'resultado.xlsx'
@@ -81,8 +92,11 @@ def exportar_resultado(request, formato):
         doc.add_paragraph(f"x₁ = {resultado['x']:.2f}")
         doc.add_paragraph(f"x₂ = {resultado['y']:.2f}")
         doc.add_paragraph(f"Z = {resultado['z']:.2f}")
-        img_stream = io.BytesIO(fig.to_image(format='png'))
-        doc.add_picture(img_stream, width=Inches(5))
+        try:
+            img_stream = io.BytesIO(fig.to_image(format='png'))
+            doc.add_picture(img_stream, width=Inches(5))
+        except Exception as e:
+            return HttpResponse(f'Error generando Word: {e}', status=500)
         doc.save(buffer)
         content_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         filename = 'resultado.docx'
