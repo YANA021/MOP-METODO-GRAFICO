@@ -36,7 +36,7 @@ class ProblemaPLForm(forms.Form):
 
 
 
-class StyledAuthenticationForm(AuthenticationForm):
+class LoginForm(AuthenticationForm):
     """Authentication form with Bootstrap styling."""
 
     def __init__(self, *args, **kwargs):
@@ -49,7 +49,7 @@ class StyledAuthenticationForm(AuthenticationForm):
         )
 
 
-class StyledUserCreationForm(UserCreationForm):
+class RegisterForm(UserCreationForm):
     """User creation form with email field and Bootstrap styling."""
 
     email = forms.EmailField(required=True)
@@ -72,3 +72,4 @@ class StyledUserCreationForm(UserCreationForm):
         self.fields['password2'].widget.attrs.update(
             {'class': 'form-control', 'placeholder': 'Confirmar contraseña'}
         )
+

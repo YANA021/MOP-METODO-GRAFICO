@@ -7,12 +7,11 @@ import io
 from openpyxl import Workbook
 from docx import Document
 from docx.shared import Inches
-from django.contrib.auth import login as auth_login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login, logout
 from .forms import (
     ProblemaPLForm,
-    StyledAuthenticationForm,
-    StyledUserCreationForm,
+    LoginForm,
+    RegisterForm,
 )
 
 
@@ -121,25 +120,25 @@ def exportar_resultado(request, formato):
 def login_view(request):
     """Handle user authentication."""
     if request.method == 'POST':
-        form = StyledAuthenticationForm(request, data=request.POST)
+        form = LoginForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
             return redirect('home')
     else:
-        form = StyledAuthenticationForm(request)
+        form = LoginForm(request)
     return render(request, 'login.html', {'form': form})
 
 
 def register(request):
     """Create a new user account."""
     if request.method == 'POST':
-        form = StyledUserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
             return redirect('home')
     else:
-        form = StyledUserCreationForm()
+        form = RegisterForm()
     context = {
         'form': form,
         'title': 'Registro',
@@ -148,3 +147,8 @@ def register(request):
         'login_text': 'Iniciar sesión',
     }
     return render(request, 'register.html', context)
+
+def logout_view(request):
+    """Log out the current user and redirect to login."""
+    logout(request)
+    return redirect('login')
