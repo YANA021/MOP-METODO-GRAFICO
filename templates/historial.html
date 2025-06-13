@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Historial{% endblock %}
+{% block content %}
+<h1 class="mb-4">Historial de Problemas</h1>
+{% if problemas %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Objetivo</th>
+      <th>Coef x₁</th>
+      <th>Coef x₂</th>
+      <th>Restricciones</th>
+      <th>Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for p in problemas %}
+    <tr>
+      <td>{{ p.id }}</td>
+      <td>{{ p.get_objetivo_display }}</td>
+      <td>{{ p.coef_x1 }}</td>
+      <td>{{ p.coef_x2 }}</td>
+      <td>{{ p.restricciones }}</td>
+      <td>{{ p.created_at|date:'Y-m-d H:i' }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No hay problemas guardados.</p>
+{% endif %}
+{% endblock %}
