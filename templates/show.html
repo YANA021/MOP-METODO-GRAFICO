@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+<div class="card" style="width: 18rem;">
+  <img src="{% static 'img/default-profile.png' %}" class="card-img-top" alt="Perfil">
+  <div class="card-body">
+    <h5 class="card-title">{{ user.username }}</h5>
+    <p class="card-text">{{ user.email }}</p>
+    <a href="{% url 'perfil_edit' %}" class="btn btn-primary">Editar perfil</a>
+  </div>
+</div>
+{% endblock %}

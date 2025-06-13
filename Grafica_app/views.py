@@ -12,7 +12,10 @@ from .forms import (
     ProblemaPLForm,
     LoginForm,
     RegisterForm,
+    ProfileForm,
 )
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def metodo_grafico(request):
@@ -147,6 +150,27 @@ def register(request):
         'login_text': 'Iniciar sesión',
     }
     return render(request, 'register.html', context)
+
+
+@login_required
+def perfil_show(request):
+    """Display current user's profile."""
+    return render(request, 'perfil/show.html', {"user": request.user})
+
+
+@login_required
+def perfil_edit(request):
+    """Allow the user to edit their profile."""
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Perfil actualizado correctamente.")
+            return redirect("perfil_show")
+    else:
+        form = ProfileForm(instance=request.user)
+    return render(request, "perfil/edit.html", {"form": form})
+
 
 def logout_view(request):
     """Log out the current user and redirect to login."""

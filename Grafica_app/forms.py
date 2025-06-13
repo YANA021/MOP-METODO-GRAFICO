@@ -73,3 +73,18 @@ class RegisterForm(UserCreationForm):
             {'class': 'form-control', 'placeholder': 'Confirmar contraseña'}
         )
 
+class ProfileForm(forms.ModelForm):
+    """Form to edit user profile information."""
+
+    class Meta:
+        model = User
+        fields = ["username", "email"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Usuario"}
+        )
+        self.fields["email"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Email"}
+        )
