@@ -7,6 +7,7 @@ urlpatterns = [
     path('metodo-grafico/', views.metodo_grafico, name='metodo_grafico'),
     path('metodo-grafico/export/<str:formato>/', views.exportar_resultado, name='exportar_resultado'),
     path('metodo-simplex/', TemplateView.as_view(template_name='home.html'), name='metodo_simplex'),
+    path('historial/', views.historial, name='historial'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register, name='register'),
     path('logout/', views.logout_view, name='logout'),
