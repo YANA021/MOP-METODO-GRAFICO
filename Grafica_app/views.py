@@ -157,7 +157,7 @@ def register(request):
 @login_required
 def perfil_show(request):
     """Display current user's profile."""
-    return render(request, 'perfil/show.html', {"user": request.user})
+    return render(request, 'show.html', {"user": request.user})
 
 
 @login_required
