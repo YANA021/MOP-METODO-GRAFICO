@@ -171,7 +171,8 @@ def perfil_edit(request):
             return redirect("perfil_show")
     else:
         form = ProfileForm(instance=request.user)
-    return render(request, "perfil/edit.html", {"form": form})
+ # ``edit.html`` also resides at the project templates root.
+    return render(request, "edit.html", {"form": form})
 
 
 def logout_view(request):
