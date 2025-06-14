@@ -78,6 +78,24 @@
 {% if grafica %}
 <div class="mt-4">
   <div id="plot-container" class="border rounded p-2 ratio ratio-16x9">{{ grafica|safe }}</div>
+  <div id="plot-controls" class="mt-2">
+    <div class="form-check form-check-inline">
+      <input class="form-check-input plot-toggle" type="checkbox" id="chk-rest" value="restricciones" checked>
+      <label class="form-check-label" for="chk-rest">Restricciones</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input plot-toggle" type="checkbox" id="chk-obj" value="objetivo" checked>
+      <label class="form-check-label" for="chk-obj">Función objetivo</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input plot-toggle" type="checkbox" id="chk-int" value="intersecciones" checked>
+      <label class="form-check-label" for="chk-int">Puntos de intersección</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input plot-toggle" type="checkbox" id="chk-reg" value="region" checked>
+      <label class="form-check-label" for="chk-reg">Región factible</label>
+    </div>
+  </div>
   <div class="mt-2 d-flex gap-2">
     <button class="btn btn-outline-secondary download-btn" data-format="png">Descargar PNG</button>
     <button class="btn btn-outline-secondary download-btn" data-format="pdf">Descargar PDF</button>
@@ -85,14 +103,36 @@
   </div>
 </div>
 <script src="{% static 'js/download.js' %}"></script>
+<script src="{% static 'js/plot_controls.js' %}"></script>
 {% endif %}
 {% if resultado %}
 <div class="mt-3">
-  <h5>Resultado óptimo</h5>
-  <p>x₁ = {{ resultado.x|floatformat:2 }}, x₂ = {{ resultado.y|floatformat:2 }}, Z = {{ resultado.z|floatformat:2 }}</p>
+  <h5>Vértices</h5>
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr><th>Vértice</th><th>x₁</th><th>x₂</th><th>Z</th></tr>
+    </thead>
+    <tbody>
+      {% for v in resultado.vertices %}
+      <tr{% if v.x == resultado.x and v.y == resultado.y %} class="table-success"{% endif %}>
+        <td>({{ v.x|floatformat:2 }}, {{ v.y|floatformat:2 }})</td>
+        <td>{{ v.x|floatformat:2 }}</td>
+        <td>{{ v.y|floatformat:2 }}</td>
+        <td>{{ v.z|floatformat:2 }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
   {% if resultado.status == 'multiple' %}
-  <p class="text-warning">Solución múltiple</p>
-  {% elif resultado.status == 'no acotada' %}
+  <div class="alert alert-success">
+    Valor óptimo Z = {{ resultado.z|floatformat:2 }} en el segmento entre ({{ resultado.opt_segment.0.0|floatformat:2 }}, {{ resultado.opt_segment.0.1|floatformat:2 }}) y ({{ resultado.opt_segment.1.0|floatformat:2 }}, {{ resultado.opt_segment.1.1|floatformat:2 }})
+  </div>
+  {% else %}
+  <div class="alert alert-success">
+    Valor óptimo Z = {{ resultado.z|floatformat:2 }} en ({{ resultado.x|floatformat:2 }}, {{ resultado.y|floatformat:2 }})
+  </div>
+  {% endif %}
+  {% if resultado.status == 'no acotada' %}
   <p class="text-warning">Solución no acotada</p>
   {% elif resultado.status == 'inviable' %}
   <p class="text-danger">Problema sin solución factible</p>
