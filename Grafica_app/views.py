@@ -14,10 +14,7 @@ from .forms import (
     RegisterForm,
     ProfileForm,
 )
-<<<<<<< HEAD
 from django.contrib import messages
-=======
->>>>>>> 69f694934bb452120143f8083261cd336b98c75a
 from django.contrib.auth.decorators import login_required
 
 
