@@ -9,6 +9,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'metodo_grafico' %}">Método Gráfico</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'metodo_simplex' %}">Método Simplex</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#ayudaModal">Ayuda</a></li>
         {% if user.is_authenticated %}
         <li class="nav-item"><a class="nav-link" href="{% url 'historial' %}">Historial</a></li>
         {% endif %}
@@ -28,10 +29,10 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
         {% endif %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Idioma</a>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">🌐 Idioma</a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Español</a></li>
-            <li><a class="dropdown-item" href="#">English</a></li>
+            <li><a class="dropdown-item" href="#">🇪🇸 Español</a></li>
+            <li><a class="dropdown-item" href="#">🇬🇧 English</a></li>
           </ul>
         </li>
         <li class="nav-item d-flex align-items-center ms-3">
