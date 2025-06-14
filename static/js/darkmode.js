@@ -10,6 +10,12 @@
       window.plotlyTemplate = 'plotly';
       if (label) label.textContent = 'Modo claro';
     }
+    const template = window.plotlyTemplate;
+    if (window.Plotly) {
+      document.querySelectorAll('.plotly-graph-div').forEach(div => {
+        Plotly.update(div, {}, { template });
+      });
+    }
   }
 
   // Apply preference as soon as the script loads
@@ -20,6 +26,9 @@
   document.addEventListener('DOMContentLoaded', function () {
     const switchInput = document.getElementById('modeSwitch');
     if (!switchInput) return;
+
+    // ensure graphs match stored preference on first render
+    applyDarkMode(darkEnabledInit);
 
     switchInput.checked = darkEnabledInit;
 

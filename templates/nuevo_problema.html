@@ -76,7 +76,15 @@
 <script src="{% static 'js/restricciones.js' %}"></script>
 <script src="{% static 'js/ayuda.js' %}"></script>
 {% if grafica %}
-<div class="mt-4">{{ grafica|safe }}</div>
+<div class="mt-4">
+  <div id="plot-container" class="border rounded p-2 ratio ratio-16x9">{{ grafica|safe }}</div>
+  <div class="mt-2 d-flex gap-2">
+    <button class="btn btn-outline-secondary download-btn" data-format="png">Descargar PNG</button>
+    <button class="btn btn-outline-secondary download-btn" data-format="pdf">Descargar PDF</button>
+    <button class="btn btn-outline-secondary download-btn" data-format="svg">Descargar SVG</button>
+  </div>
+</div>
+<script src="{% static 'js/download.js' %}"></script>
 {% endif %}
 {% if resultado %}
 <div class="mt-3">
