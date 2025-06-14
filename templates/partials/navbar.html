@@ -6,28 +6,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<<<<<<< HEAD
-          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
-          {% if user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'metodo_grafico' %}">Método Gráfico</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'metodo_simplex' %}">Método Simplex</a></li>
-          {% endif %}
-        </ul>
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          {% if user.is_authenticated %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="{% url 'perfil_show' %}">Ver perfil</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
-            </ul>
-          </li>
-          {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
-          {% endif %}
-=======
         <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'metodo_grafico' %}">Método Gráfico</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'metodo_simplex' %}">Método Simplex</a></li>
@@ -37,12 +15,18 @@
       </ul>
       <ul class="navbar-nav mb-2 mb-lg-0">
         {% if user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{% url 'perfil_show' %}">Ver perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
+          </ul>
+        </li>
         {% else %}
         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
         {% endif %}
->>>>>>> 69f694934bb452120143f8083261cd336b98c75a
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Idioma</a>
           <ul class="dropdown-menu dropdown-menu-end">
