@@ -122,9 +122,25 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         opt_val = max(values)
     opt_points = [p for p, v in zip(candidates, values) if abs(v - opt_val) < 1e-6]
 
+    vertices = [
+        {
+            'x': float(x),
+            'y': float(y),
+            'z': float(val),
+        }
+        for (x, y), val in zip(candidates, values)
+    ]
+
     status = 'optimo'
+    opt_segment = None
     if len(opt_points) > 1:
         status = 'multiple'
+        # take extreme points of the optimal segment for reference
+        xs = [p[0] for p in opt_points]
+        ys = [p[1] for p in opt_points]
+        p_min = (min(xs), min(ys))
+        p_max = (max(xs), max(ys))
+        opt_segment = [p_min, p_max]
 
     # Use linprog to detect unboundedness
     A = []
@@ -148,10 +164,17 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     if res.status == 3:
         status = 'no acotada'
 
+    # Determine axis limits based on feasible vertices
+    max_x = max((v['x'] for v in vertices), default=BOUND)
+    max_y = max((v['y'] for v in vertices), default=BOUND)
+    x_bound = max(max_x, 1) * 1.1
+    y_bound = max(max_y, 1) * 1.1
+
+    plot_bound = max(x_bound, y_bound)
+
     # Prepare plot
     fig = go.Figure()
-    bound = BOUND
-    x = np.linspace(0, bound, 400)
+    x = np.linspace(0, plot_bound, 400)
     for a, b_, op, c in restr:
         if b_ == 0:
             x_line = np.full_like(x, c / a)
@@ -159,11 +182,28 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         else:
             x_line = x
             y_line = (c - a * x) / b_
-        fig.add_trace(go.Scatter(x=x_line, y=y_line, mode='lines', name=f'{a}x₁ + {b_}x₂ {op} {c}'))
+        fig.add_trace(
+            go.Scatter(
+                x=x_line,
+                y=y_line,
+                mode='lines',
+                name=f'{a}x₁ + {b_}x₂ {op} {c}',
+                legendgroup='restricciones',
+            )
+        )
 
     if not poly.is_empty and hasattr(poly, 'exterior'):
         xs, ys = poly.exterior.xy
-        fig.add_trace(go.Scatter(x=list(xs), y=list(ys), fill='toself', name='Región factible', opacity=0.3))
+        fig.add_trace(
+            go.Scatter(
+                x=list(xs),
+                y=list(ys),
+                fill='toself',
+                name='Región factible',
+                opacity=0.3,
+                legendgroup='region',
+            )
+        )
         for vx, vy in zip(xs, ys):
             fig.add_trace(
                 go.Scatter(
@@ -172,22 +212,54 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
                     mode='markers+text',
                     text=[f"({vx:.2f}, {vy:.2f})"],
                     textposition='top center',
+                    legendgroup='intersecciones',
                     showlegend=False,
                 )
             )
 
     x_opt, y_opt = opt_points[0]
-    fig.add_trace(go.Scatter(x=[x_opt], y=[y_opt], mode='markers+text', text=[f'({x_opt:.2f}, {y_opt:.2f})'], name='Óptimo'))
+    fig.add_trace(
+        go.Scatter(
+            x=[x_opt],
+            y=[y_opt],
+            mode='markers+text',
+            text=[f"({x_opt:.2f}, {y_opt:.2f})"],
+            name='Óptimo',
+            legendgroup='optimo',
+        )
+    )
     z_line_y = (opt_val - coef_x1 * x) / coef_x2 if coef_x2 != 0 else np.full_like(x, opt_val / coef_x2)
-    fig.add_trace(go.Scatter(x=x, y=z_line_y, mode='lines', line=dict(dash='dash'), name='Función objetivo'))
+    fig.add_trace(
+        go.Scatter(
+            x=x,
+            y=z_line_y,
+            mode='lines',
+            line=dict(dash='dash'),
+            name='Función objetivo',
+            legendgroup='objetivo',
+        )
+    )
 
-    fig.update_layout(template='plotly', xaxis_title='x₁', yaxis_title='x₂')
+    fig.update_layout(
+        template='plotly',
+        xaxis_title='x₁',
+        yaxis_title='x₂',
+        xaxis=dict(range=[0, x_bound]),
+        yaxis=dict(range=[0, y_bound]),
+        autosize=False,
+        width=600,
+        height=500,
+        margin=dict(l=40, r=40, t=40, b=40),
+    )
 
     return {
         'status': status,
         'x': x_opt,
         'y': y_opt,
         'z': opt_val,
+        'vertices': vertices,
+        'opt_points': opt_points,
+        'opt_segment': opt_segment,
         'grafica': fig.to_html(full_html=False, include_plotlyjs='cdn', config={'responsive': True}),
-        'fig': fig
+        'fig': fig,
     }
