@@ -14,7 +14,10 @@ from .forms import (
     RegisterForm,
     ProfileForm,
 )
+<<<<<<< HEAD
 from django.contrib import messages
+=======
+>>>>>>> 69f694934bb452120143f8083261cd336b98c75a
 from django.contrib.auth.decorators import login_required
 
 
@@ -26,13 +29,15 @@ def metodo_grafico(request):
     if request.method == 'POST':
         form = ProblemaPLForm(request.POST)
         if form.is_valid():
-            ProblemaPL.objects.create(
-                objetivo=form.cleaned_data['objetivo'],
-                coef_x1=form.cleaned_data['coef_x1'],
-                coef_x2=form.cleaned_data['coef_x2'],
-                restricciones=form.cleaned_data['restricciones'],
-            )
-            mensaje = 'Problema guardado correctamente.'
+            if request.user.is_authenticated:
+                ProblemaPL.objects.create(
+                    user=request.user,
+                    objetivo=form.cleaned_data['objetivo'],
+                    coef_x1=form.cleaned_data['coef_x1'],
+                    coef_x2=form.cleaned_data['coef_x2'],
+                    restricciones=form.cleaned_data['restricciones'],
+                )
+                mensaje = 'Problema guardado correctamente.'
             resultado = resolver_metodo_grafico(
                 form.cleaned_data['objetivo'],
                 form.cleaned_data['coef_x1'],
@@ -176,3 +181,10 @@ def logout_view(request):
     """Log out the current user and redirect to login."""
     logout(request)
     return redirect('login')
+
+
+@login_required
+def historial(request):
+    """Display all ProblemaPL entries created by the logged in user."""
+    problemas = ProblemaPL.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'historial.html', {'problemas': problemas})
