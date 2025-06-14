@@ -111,7 +111,7 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     if not candidates:
         return {
             'status': 'inviable',
-            'grafica': go.Figure().to_html(full_html=False)
+            'grafica': go.Figure().to_html(full_html=False, include_plotlyjs='cdn', config={'responsive': True})
         }
 
     # Evaluate objective function
@@ -164,6 +164,17 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     if not poly.is_empty and hasattr(poly, 'exterior'):
         xs, ys = poly.exterior.xy
         fig.add_trace(go.Scatter(x=list(xs), y=list(ys), fill='toself', name='Región factible', opacity=0.3))
+        for vx, vy in zip(xs, ys):
+            fig.add_trace(
+                go.Scatter(
+                    x=[vx],
+                    y=[vy],
+                    mode='markers+text',
+                    text=[f"({vx:.2f}, {vy:.2f})"],
+                    textposition='top center',
+                    showlegend=False,
+                )
+            )
 
     x_opt, y_opt = opt_points[0]
     fig.add_trace(go.Scatter(x=[x_opt], y=[y_opt], mode='markers+text', text=[f'({x_opt:.2f}, {y_opt:.2f})'], name='Óptimo'))
@@ -177,6 +188,6 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         'x': x_opt,
         'y': y_opt,
         'z': opt_val,
-        'grafica': fig.to_html(full_html=False),
+        'grafica': fig.to_html(full_html=False, include_plotlyjs='cdn', config={'responsive': True}),
         'fig': fig
     }
