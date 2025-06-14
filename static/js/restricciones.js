@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  window.updateRemoveButtons = updateRemoveButtons;
+
   addBtn.addEventListener('click', function (e) {
     e.preventDefault();
     const first = container.querySelector('.restriccion-row');
