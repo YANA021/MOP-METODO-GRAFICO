@@ -22,7 +22,8 @@ from django.contrib.auth.decorators import login_required
 def metodo_grafico(request):
     mensaje = ''
     resultado = None
-    grafica = ''
+    grafica_normal = ''
+    grafica_cruz = ''
     post_data = None
     if request.method == 'POST':
         form = ProblemaPLForm(request.POST)
@@ -36,13 +37,23 @@ def metodo_grafico(request):
                     restricciones=form.cleaned_data['restricciones'],
                 )
                 mensaje = 'Problema guardado correctamente.'
-            resultado = resolver_metodo_grafico(
+            resultado_normal = resolver_metodo_grafico(
                 form.cleaned_data['objetivo'],
                 form.cleaned_data['coef_x1'],
                 form.cleaned_data['coef_x2'],
                 form.cleaned_data['restricciones'],
+                estilo="normal",
             )
-            grafica = resultado.get('grafica', '')
+            resultado_cruz = resolver_metodo_grafico(
+                form.cleaned_data['objetivo'],
+                form.cleaned_data['coef_x1'],
+                form.cleaned_data['coef_x2'],
+                form.cleaned_data['restricciones'],
+                estilo="cruz",
+            )
+            resultado = resultado_normal
+            grafica_normal = resultado_normal.get('grafica', '')
+            grafica_cruz = resultado_cruz.get('grafica', '')
             post_data = request.POST
             form = ProblemaPLForm()
     else:
@@ -50,7 +61,8 @@ def metodo_grafico(request):
     context = {
         'form': form,
         'mensaje': mensaje,
-        'grafica': grafica,
+        'grafica_normal': grafica_normal,
+        'grafica_cruz': grafica_cruz,
         'resultado': resultado,
         'post_data': post_data,
     }
