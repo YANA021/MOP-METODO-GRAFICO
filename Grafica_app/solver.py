@@ -15,7 +15,9 @@ def _fmt(num: float) -> str:
     return f"{num:.1f}"
 
 
-def _clip_polygon(poly: Polygon, a: float, b: float, op: str, c: float, bound: float = BOUND) -> Polygon:
+def _clip_polygon(
+    poly: Polygon, a: float, b: float, op: str, c: float, bound: float = BOUND
+) -> Polygon:
     """Clip a polygon with the half-plane defined by ``a*x + b*y (op) c``."""
     if b == 0:
         x = c / a if a != 0 else 0.0
@@ -24,11 +26,13 @@ def _clip_polygon(poly: Polygon, a: float, b: float, op: str, c: float, bound: f
         y = c / b if b != 0 else 0.0
         line = LineString([(-bound, y), (bound, y)])
     else:
-        line = LineString([(-bound, (c - a * (-bound)) / b), (bound, (c - a * bound) / b)])
+        line = LineString(
+            [(-bound, (c - a * (-bound)) / b), (bound, (c - a * bound) / b)]
+        )
 
-    if op == '=':
-        poly = _clip_polygon(poly, a, b, '<=', c, bound)
-        return _clip_polygon(poly, a, b, '>=', c, bound)
+    if op == "=":
+        poly = _clip_polygon(poly, a, b, "<=", c, bound)
+        return _clip_polygon(poly, a, b, ">=", c, bound)
 
     result = split(poly, line)
     if len(result.geoms) <= 1:
@@ -38,9 +42,9 @@ def _clip_polygon(poly: Polygon, a: float, b: float, op: str, c: float, bound: f
     for part in result.geoms:
         rep = part.representative_point()
         val = a * rep.x + b * rep.y
-        if op == '<=' and val <= c + 1e-9:
+        if op == "<=" and val <= c + 1e-9:
             parts.append(part)
-        elif op == '>=' and val >= c - 1e-9:
+        elif op == ">=" and val >= c - 1e-9:
             parts.append(part)
 
     if not parts:
@@ -94,20 +98,25 @@ def _satisfies(point, restricciones):
     x, y = point
     for a, b, op, c in restricciones:
         val = a * x + b * y
-        if op == '<=' and val > c + 1e-7:
+        if op == "<=" and val > c + 1e-7:
             return False
-        if op == '>=' and val < c - 1e-7:
+        if op == ">=" and val < c - 1e-7:
             return False
-        if op == '=' and abs(val - c) > 1e-7:
+        if op == "=" and abs(val - c) > 1e-7:
             return False
     return True
 
 
-def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restricciones):
+def resolver_metodo_grafico(
+    objetivo: str, coef_x1: float, coef_x2: float, restricciones
+):
     """Resolve a two variable linear program using a graphical approach."""
     # Build full list of constraints, including non-negativity
-    restr = [(float(r['coef_x1']), float(r['coef_x2']), r['operador'], float(r['valor'])) for r in restricciones]
-    restr.extend([(1, 0, '>=', 0), (0, 1, '>=', 0)])
+    restr = [
+        (float(r["coef_x1"]), float(r["coef_x2"]), r["operador"], float(r["valor"]))
+        for r in restricciones
+    ]
+    restr.extend([(1, 0, ">=", 0), (0, 1, ">=", 0)])
 
     # Determine polygon region for plotting
     poly = _build_feasible_polygon(restr)
@@ -117,13 +126,15 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
 
     if not candidates:
         return {
-            'status': 'inviable',
-            'grafica': go.Figure().to_html(full_html=False, include_plotlyjs='cdn', config={'responsive': True})
+            "status": "inviable",
+            "grafica": go.Figure().to_html(
+                full_html=False, include_plotlyjs="cdn", config={"responsive": True}
+            ),
         }
 
     # Evaluate objective function
     values = [coef_x1 * x + coef_x2 * y for x, y in candidates]
-    if objetivo == 'min':
+    if objetivo == "min":
         opt_val = min(values)
     else:
         opt_val = max(values)
@@ -131,17 +142,17 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
 
     vertices = [
         {
-            'x': float(x),
-            'y': float(y),
-            'z': float(val),
+            "x": float(x),
+            "y": float(y),
+            "z": float(val),
         }
         for (x, y), val in zip(candidates, values)
     ]
 
-    status = 'optimo'
+    status = "optimo"
     opt_segment = None
     if len(opt_points) > 1:
-        status = 'multiple'
+        status = "multiple"
         # take extreme points of the optimal segment for reference
         xs = [p[0] for p in opt_points]
         ys = [p[1] for p in opt_points]
@@ -153,27 +164,31 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     A = []
     b = []
     for a, b_, op, c in restr:
-        if op == '<=':
+        if op == "<=":
             A.append([a, b_])
             b.append(c)
-        elif op == '>=':
+        elif op == ">=":
             A.append([-a, -b_])
             b.append(-c)
-        elif op == '=':
+        elif op == "=":
             A.append([a, b_])
             b.append(c)
             A.append([-a, -b_])
             b.append(-c)
     A = np.array(A)
     b = np.array(b)
-    c_obj = np.array([-coef_x1, -coef_x2]) if objetivo == 'max' else np.array([coef_x1, coef_x2])
-    res = linprog(c_obj, A_ub=A, b_ub=b, method='highs')
+    c_obj = (
+        np.array([-coef_x1, -coef_x2])
+        if objetivo == "max"
+        else np.array([coef_x1, coef_x2])
+    )
+    res = linprog(c_obj, A_ub=A, b_ub=b, method="highs")
     if res.status == 3:
-        status = 'no acotada'
+        status = "no acotada"
 
     # Determine axis limits based on feasible vertices
-    max_x = max((v['x'] for v in vertices), default=BOUND)
-    max_y = max((v['y'] for v in vertices), default=BOUND)
+    max_x = max((v["x"] for v in vertices), default=BOUND)
+    max_y = max((v["y"] for v in vertices), default=BOUND)
     x_max = max(max_x, 0) + 1
     y_max = max(max_y, 0) + 1
 
@@ -201,22 +216,22 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             go.Scatter(
                 x=x_line,
                 y=y_line,
-                mode='lines',
-                name=f'{a}x₁ + {b_}x₂ {op} {c}',
-                legendgroup='restricciones',
+                mode="lines",
+                name=f"{a}x₁ + {b_}x₂ {op} {c}",
+                legendgroup="restricciones",
             )
         )
 
-    if not poly.is_empty and hasattr(poly, 'exterior'):
+    if not poly.is_empty and hasattr(poly, "exterior"):
         xs, ys = poly.exterior.xy
         fig.add_trace(
             go.Scatter(
                 x=list(xs),
                 y=list(ys),
-                fill='toself',
-                name='Región factible',
+                fill="toself",
+                name="Región factible",
                 opacity=0.3,
-                legendgroup='region',
+                legendgroup="region",
             )
         )
         for vx, vy in zip(xs, ys):
@@ -224,10 +239,10 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
                 go.Scatter(
                     x=[vx],
                     y=[vy],
-                    mode='markers+text',
+                    mode="markers+text",
                     text=[f"({_fmt(vx)}, {_fmt(vy)})"],
-                    textposition='top center',
-                    legendgroup='intersecciones',
+                    textposition="top center",
+                    legendgroup="intersecciones",
                     showlegend=False,
                 )
             )
@@ -237,75 +252,81 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         go.Scatter(
             x=[x_opt],
             y=[y_opt],
-            mode='markers+text',
+            mode="markers+text",
             text=[f"({_fmt(x_opt)}, {_fmt(y_opt)})"],
-            name='Óptimo',
-            legendgroup='optimo',
+            name="Óptimo",
+            legendgroup="optimo",
         )
     )
-    z_line_y = (opt_val - coef_x1 * x) / coef_x2 if coef_x2 != 0 else np.full_like(x, opt_val / coef_x2)
+    z_line_y = (
+        (opt_val - coef_x1 * x) / coef_x2
+        if coef_x2 != 0
+        else np.full_like(x, opt_val / coef_x2)
+    )
     fig.add_trace(
         go.Scatter(
             x=x,
             y=z_line_y,
-            mode='lines',
-            line=dict(dash='dash'),
-            name='Función objetivo',
-            legendgroup='objetivo',
+            mode="lines",
+            line=dict(dash="dash"),
+            name="Función objetivo",
+            legendgroup="objetivo",
         )
     )
 
     fig.update_layout(
-        template='plotly',
-        xaxis_title='x₁',
-        yaxis_title='x₂',
+        template="plotly",
+        xaxis_title="x₁",
+        yaxis_title="x₂",
         xaxis=dict(
             range=[x_min, x_max],
             showgrid=True,
-            gridcolor='lightgray',
+            gridcolor="lightgray",
             zeroline=False,
             showline=True,
-            linecolor='black',
+            linecolor="black",
             linewidth=2,
-            ticks='inside',
-            ticklabelposition='inside',
-            side='bottom',
-            anchor='y',
+            ticks="inside",
+            ticklabelposition="inside top",
+            side="bottom",
+            anchor="y",
             position=0,
-            tickmode='array',
+            tickmode="array",
             tickvals=x_ticks,
             ticktext=[_fmt(v) for v in x_ticks],
         ),
         yaxis=dict(
             range=[y_min, y_max],
             showgrid=True,
-            gridcolor='lightgray',
+            gridcolor="lightgray",
             zeroline=False,
             showline=True,
-            linecolor='black',
+            linecolor="black",
             linewidth=2,
-            ticks='inside',
-            ticklabelposition='inside',
-            side='left',
-            anchor='x',
+            ticks="inside",
+            ticklabelposition="inside right",
+            side="left",
+            anchor="x",
             position=0,
-            tickmode='array',
+            tickmode="array",
             tickvals=y_ticks,
             ticktext=[_fmt(v) for v in y_ticks],
         ),
         autosize=True,
         height=600,
-        margin=dict(l=20, r=20, t=20, b=20),
+        margin=dict(l=40, r=40, t=40, b=40),
     )
 
     return {
-        'status': status,
-        'x': x_opt,
-        'y': y_opt,
-        'z': opt_val,
-        'vertices': vertices,
-        'opt_points': opt_points,
-        'opt_segment': opt_segment,
-        'grafica': fig.to_html(full_html=False, include_plotlyjs='cdn', config={'responsive': True}),
-        'fig': fig,
+        "status": status,
+        "x": x_opt,
+        "y": y_opt,
+        "z": opt_val,
+        "vertices": vertices,
+        "opt_points": opt_points,
+        "opt_segment": opt_segment,
+        "grafica": fig.to_html(
+            full_html=False, include_plotlyjs="cdn", config={"responsive": True}
+        ),
+        "fig": fig,
     }
