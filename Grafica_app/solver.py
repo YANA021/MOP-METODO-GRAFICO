@@ -194,7 +194,10 @@ def resolver_metodo_grafico(
 
     plot_bound = max(x_max, y_max)
 
+    # Add a small margin so axes are visible inside the feasible region
     negative_margin = min(1.0, 0.1 * plot_bound)
+    margin_factor = 1.2
+    negative_margin *= margin_factor
     x_min = -negative_margin
     y_min = -negative_margin
 
@@ -289,7 +292,7 @@ def resolver_metodo_grafico(
             ticks="outside",
             ticklen=6,
             tickcolor="black",
-            ticklabelposition="outside top",
+            ticklabelposition="inside bottom",
             side="bottom",
             anchor="y",
             position=0,
@@ -308,7 +311,7 @@ def resolver_metodo_grafico(
             ticks="outside",
             ticklen=6,
             tickcolor="black",
-            ticklabelposition="outside left",
+            ticklabelposition="inside left",
             side="left",
             anchor="x",
             position=0,
@@ -320,6 +323,8 @@ def resolver_metodo_grafico(
         height=600,
         margin=dict(l=40, r=40, t=40, b=40),
     )
+
+    fig.update_yaxes(scaleanchor="x", scaleratio=1)
 
 
     return {
