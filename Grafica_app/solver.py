@@ -264,7 +264,6 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         autosize=True,
         height=600,
         margin=dict(l=20, r=20, t=20, b=20),
-        responsive=True,
     )
 
     return {
