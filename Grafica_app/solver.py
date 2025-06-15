@@ -170,10 +170,11 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     x_max = max(max_x, 0) + 1
     y_max = max(max_y, 0) + 1
 
-    x_min = -1
-    y_min = -1
-
     plot_bound = max(x_max, y_max)
+
+    negative_margin = min(1.0, 0.1 * plot_bound)
+    x_min = -negative_margin
+    y_min = -negative_margin
 
     # Prepare plot
     fig = go.Figure()
@@ -251,19 +252,25 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             range=[x_min, x_max],
             showgrid=True,
             gridcolor='lightgray',
-            zeroline=True,
-            showline=True,
+            zeroline=False,
+            showline=False,
         ),
         yaxis=dict(
             range=[y_min, y_max],
             showgrid=True,
             gridcolor='lightgray',
-            zeroline=True,
-            showline=True,
+            zeroline=False,
+            showline=False,
         ),
         autosize=True,
         height=600,
         margin=dict(l=20, r=20, t=20, b=20),
+        shapes=[
+            dict(type='line', x0=x_min, x1=x_max, y0=0, y1=0,
+                 line=dict(color='black', width=2), layer='below'),
+            dict(type='line', x0=0, x1=0, y0=y_min, y1=y_max,
+                 line=dict(color='black', width=2), layer='below'),
+        ],
     )
 
     return {
