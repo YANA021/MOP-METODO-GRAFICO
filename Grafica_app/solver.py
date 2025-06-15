@@ -286,8 +286,10 @@ def resolver_metodo_grafico(
             showline=True,
             linecolor="black",
             linewidth=2,
-            ticks="inside",
-            ticklabelposition="inside top",
+            ticks="outside",
+            ticklen=6,
+            tickcolor="black",
+            ticklabelposition="inside",
             side="bottom",
             anchor="y",
             position=0,
@@ -303,8 +305,10 @@ def resolver_metodo_grafico(
             showline=True,
             linecolor="black",
             linewidth=2,
-            ticks="inside",
-            ticklabelposition="inside right",
+            ticks="outside",
+            ticklen=6,
+            tickcolor="black",
+            ticklabelposition="inside",
             side="left",
             anchor="x",
             position=0,
@@ -315,6 +319,24 @@ def resolver_metodo_grafico(
         autosize=True,
         height=600,
         margin=dict(l=40, r=40, t=40, b=40),
+    )
+
+    # Draw axis lines crossing at the origin
+    fig.add_shape(
+        type="line",
+        x0=0,
+        x1=0,
+        y0=y_min,
+        y1=y_max,
+        line=dict(color="black", width=2),
+    )
+    fig.add_shape(
+        type="line",
+        y0=0,
+        y1=0,
+        x0=x_min,
+        x1=x_max,
+        line=dict(color="black", width=2),
     )
 
     return {
