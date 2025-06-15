@@ -126,7 +126,7 @@ def build_cartesian_axes(fig, x_min, x_max, y_min, y_max):
         ))
     return fig
 
-def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restricciones):
+def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restricciones, estilo: str = "normal"):
     restr = [(float(r["coef_x1"]), float(r["coef_x2"]), r["operador"], float(r["valor"])) for r in restricciones]
     restr.extend([(1, 0, ">=", 0), (0, 1, ">=", 0)])
     poly = _build_feasible_polygon(restr)
@@ -156,7 +156,8 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     y_min = -negative_margin
 
     fig = go.Figure()
-    fig = build_cartesian_axes(fig, x_min, x_max, y_min, y_max)
+    if estilo == "cruz":
+        fig = build_cartesian_axes(fig, x_min, x_max, y_min, y_max)
 
     x = np.linspace(x_min, plot_bound, 400)
     for a, b_, op, c in restr:
@@ -180,14 +181,37 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     z_line_y = (opt_val - coef_x1 * x) / coef_x2 if coef_x2 != 0 else np.full_like(x, opt_val / coef_x2)
     fig.add_trace(go.Scatter(x=x, y=z_line_y, mode="lines", line=dict(dash="dash"), name="Función objetivo"))
 
-    fig.update_layout(
-        xaxis=dict(visible=False, range=[x_min, x_max], fixedrange=True),
-        yaxis=dict(visible=False, range=[y_min, y_max], fixedrange=True),
-        plot_bgcolor="white",
-        autosize=True,
-        height=600,
-        margin=dict(l=40, r=40, t=40, b=40)
-    )
+    if estilo == "cruz":
+        fig.update_layout(
+            xaxis=dict(visible=False, range=[x_min, x_max], fixedrange=True),
+            yaxis=dict(visible=False, range=[y_min, y_max], fixedrange=True),
+            plot_bgcolor="white",
+            autosize=True,
+            height=600,
+            margin=dict(l=40, r=40, t=40, b=40),
+        )
+    else:
+        fig.update_layout(
+            template="plotly",
+            xaxis=dict(
+                title="x₁", range=[x_min, x_max],
+                showgrid=True, gridcolor="lightgray",
+                zeroline=True, zerolinewidth=2, zerolinecolor="black",
+                showline=True, linecolor="black", mirror=True,
+                ticks="inside", ticklen=6, tickcolor="black",
+            ),
+            yaxis=dict(
+                title="x₂", range=[y_min, y_max],
+                showgrid=True, gridcolor="lightgray",
+                zeroline=True, zerolinewidth=2, zerolinecolor="black",
+                showline=True, linecolor="black", mirror=True,
+                ticks="inside", ticklen=6, tickcolor="black",
+            ),
+            plot_bgcolor="white",
+            autosize=True,
+            height=600,
+            margin=dict(l=40, r=40, t=40, b=40),
+        )
     fig.update_yaxes(scaleanchor="x", scaleratio=1)
 
     return {
