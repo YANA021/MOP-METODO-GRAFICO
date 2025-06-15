@@ -267,7 +267,7 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             showline=True,
             linecolor='black',
             linewidth=2,
-            ticks='outside',
+            ticks='inside',
             ticklabelposition='inside',
             side='bottom',
             anchor='y',
@@ -284,7 +284,7 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             showline=True,
             linecolor='black',
             linewidth=2,
-            ticks='outside',
+            ticks='inside',
             ticklabelposition='inside',
             side='left',
             anchor='x',
@@ -296,12 +296,6 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         autosize=True,
         height=600,
         margin=dict(l=20, r=20, t=20, b=20),
-        shapes=[
-            dict(type='line', x0=x_min, x1=x_max, y0=0, y1=0,
-                 line=dict(color='black', width=2), layer='below'),
-            dict(type='line', x0=0, x1=0, y0=y_min, y1=y_max,
-                 line=dict(color='black', width=2), layer='below'),
-        ],
     )
 
     return {
