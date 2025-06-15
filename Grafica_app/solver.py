@@ -8,6 +8,13 @@ from scipy.optimize import linprog
 BOUND = 10.0
 
 
+def _fmt(num: float) -> str:
+    """Format numbers: integers without decimals, else one decimal."""
+    if abs(num - round(num)) < 1e-6:
+        return f"{int(round(num))}"
+    return f"{num:.1f}"
+
+
 def _clip_polygon(poly: Polygon, a: float, b: float, op: str, c: float, bound: float = BOUND) -> Polygon:
     """Clip a polygon with the half-plane defined by ``a*x + b*y (op) c``."""
     if b == 0:
@@ -176,6 +183,10 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     x_min = -negative_margin
     y_min = -negative_margin
 
+    # Axis tick values with proper formatting
+    x_ticks = [x_min] + list(range(0, int(np.ceil(x_max)) + 1))
+    y_ticks = [y_min] + list(range(0, int(np.ceil(y_max)) + 1))
+
     # Prepare plot
     fig = go.Figure()
     x = np.linspace(x_min, plot_bound, 400)
@@ -214,7 +225,7 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
                     x=[vx],
                     y=[vy],
                     mode='markers+text',
-                    text=[f"({vx:.2f}, {vy:.2f})"],
+                    text=[f"({_fmt(vx)}, {_fmt(vy)})"],
                     textposition='top center',
                     legendgroup='intersecciones',
                     showlegend=False,
@@ -227,7 +238,7 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             x=[x_opt],
             y=[y_opt],
             mode='markers+text',
-            text=[f"({x_opt:.2f}, {y_opt:.2f})"],
+            text=[f"({_fmt(x_opt)}, {_fmt(y_opt)})"],
             name='Óptimo',
             legendgroup='optimo',
         )
@@ -253,14 +264,26 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             showgrid=True,
             gridcolor='lightgray',
             zeroline=False,
-            showline=False,
+            showline=True,
+            linecolor='black',
+            anchor='y',
+            position=0,
+            tickmode='array',
+            tickvals=x_ticks,
+            ticktext=[_fmt(v) for v in x_ticks],
         ),
         yaxis=dict(
             range=[y_min, y_max],
             showgrid=True,
             gridcolor='lightgray',
             zeroline=False,
-            showline=False,
+            showline=True,
+            linecolor='black',
+            anchor='x',
+            position=0,
+            tickmode='array',
+            tickvals=y_ticks,
+            ticktext=[_fmt(v) for v in y_ticks],
         ),
         autosize=True,
         height=600,
