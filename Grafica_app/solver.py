@@ -167,14 +167,17 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     # Determine axis limits based on feasible vertices
     max_x = max((v['x'] for v in vertices), default=BOUND)
     max_y = max((v['y'] for v in vertices), default=BOUND)
-    x_bound = max(max_x, 1) * 1.1
-    y_bound = max(max_y, 1) * 1.1
+    x_max = max(max_x, 0) + 1
+    y_max = max(max_y, 0) + 1
 
-    plot_bound = max(x_bound, y_bound)
+    x_min = -1
+    y_min = -1
+
+    plot_bound = max(x_max, y_max)
 
     # Prepare plot
     fig = go.Figure()
-    x = np.linspace(0, plot_bound, 400)
+    x = np.linspace(x_min, plot_bound, 400)
     for a, b_, op, c in restr:
         if b_ == 0:
             x_line = np.full_like(x, c / a)
@@ -244,12 +247,24 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         template='plotly',
         xaxis_title='x₁',
         yaxis_title='x₂',
-        xaxis=dict(range=[0, x_bound]),
-        yaxis=dict(range=[0, y_bound]),
-        autosize=False,
-        width=600,
-        height=500,
-        margin=dict(l=40, r=40, t=40, b=40),
+        xaxis=dict(
+            range=[x_min, x_max],
+            showgrid=True,
+            gridcolor='lightgray',
+            zeroline=True,
+            showline=True,
+        ),
+        yaxis=dict(
+            range=[y_min, y_max],
+            showgrid=True,
+            gridcolor='lightgray',
+            zeroline=True,
+            showline=True,
+        ),
+        autosize=True,
+        height=600,
+        margin=dict(l=20, r=20, t=20, b=20),
+        responsive=True,
     )
 
     return {
