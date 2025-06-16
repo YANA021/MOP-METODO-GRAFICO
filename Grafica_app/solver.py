@@ -132,7 +132,14 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
     poly = _build_feasible_polygon(restr)
     candidates = [v for v in _candidate_vertices(restr) if _satisfies(v, restr)]
     if not candidates:
-        return {"status": "inviable", "grafica": go.Figure().to_html(full_html=False, include_plotlyjs="cdn", config={"responsive": True})}
+        return {
+            "status": "inviable",
+            "grafica": go.Figure().to_html(
+                full_html=False,
+                include_plotlyjs="cdn",
+                config={"responsive": True, "doubleClick": "reset"},
+            ),
+        }
     values = [coef_x1 * x + coef_x2 * y for x, y in candidates]
     opt_val = min(values) if objetivo == "min" else max(values)
     opt_points = [p for p, v in zip(candidates, values) if abs(v - opt_val) < 1e-6]
@@ -190,6 +197,7 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             height=600,
             margin=dict(l=40, r=40, t=40, b=40),
         )
+        fig.update_yaxes(scaleanchor="x", scaleratio=1)
     else:
         fig.update_layout(
             template="plotly",
@@ -211,8 +219,8 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             autosize=True,
             height=600,
             margin=dict(l=40, r=40, t=40, b=40),
+            dragmode="zoom",
         )
-    fig.update_yaxes(scaleanchor="x", scaleratio=1)
 
     return {
         "status": status,
@@ -222,6 +230,10 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         "vertices": vertices,
         "opt_points": opt_points,
         "opt_segment": opt_segment,
-        "grafica": fig.to_html(full_html=False, include_plotlyjs="cdn", config={"responsive": True}),
+        "grafica": fig.to_html(
+            full_html=False,
+            include_plotlyjs="cdn",
+            config={"responsive": True, "doubleClick": "reset"},
+        ),
         "fig": fig,
     }
