@@ -207,27 +207,27 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         fig.update_yaxes(scaleanchor="x", scaleratio=1)
     else:
         fig.update_layout(
-            template="plotly",
-            xaxis=dict(
+              template="plotly",
+           xaxis=dict(
                 title="x₁", range=[x_min, x_max],
                 showgrid=True, gridcolor="lightgray",
-                zeroline=True, zerolinewidth=2, zerolinecolor="black",
-                showline=True, linecolor="black", mirror=True,
-                ticks="inside", ticklen=6, tickcolor="black",
-            ),
-            yaxis=dict(
-                title="x₂", range=[y_min, y_max],
+               zeroline=True, zerolinewidth=2, zerolinecolor="black",
+                 showline=True, linecolor="black", mirror=True,
+               ticks="inside", ticklen=6, tickcolor="black",
+             ),
+             yaxis=dict(
+                  title="x₂", range=[y_min, y_max],
                 showgrid=True, gridcolor="lightgray",
-                zeroline=True, zerolinewidth=2, zerolinecolor="black",
-                showline=True, linecolor="black", mirror=True,
-                ticks="inside", ticklen=6, tickcolor="black",
+                  zeroline=True, zerolinewidth=2, zerolinecolor="black",
+                 showline=True, linecolor="black", mirror=True,
+                  ticks="inside", ticklen=6, tickcolor="black",
             ),
-            plot_bgcolor="white",
-            uirevision="zoom-state",
-            autosize=True,
-            height=600,
-            margin=dict(l=40, r=40, t=40, b=40),
-            dragmode="zoom",
+              plot_bgcolor="white",
+              uirevision="zoom-state",
+             autosize=True,
+             height=600,
+              margin=dict(l=40, r=40, t=40, b=40),
+             dragmode="zoom",
         )
 
     return {
