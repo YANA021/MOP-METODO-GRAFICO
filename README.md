@@ -44,3 +44,9 @@ fig.update_layout(
     plot_bgcolor='white',
 )
 ```
+
+## Zoom por arrastre en la vista cartesiana
+La vista cartesiana ahora permite acercar una región dibujando un rectángulo.
+Esto se logra habilitando `dragmode="zoom"` y evitando fijar la proporción de
+los ejes, por lo que el usuario puede seleccionar libremente el área de interés
+y mantener el nivel de zoom hasta que decida restablecerlo.

@@ -197,14 +197,13 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         fig.update_layout(
             xaxis=dict(visible=False, range=[x_min, x_max], fixedrange=False),
             yaxis=dict(visible=False, range=[y_min, y_max], fixedrange=False),
-            dragmode="pan",
+            dragmode="zoom",
             plot_bgcolor="white",
             uirevision="zoom-state",
             autosize=True,
             height=600,
             margin=dict(l=40, r=40, t=40, b=40),
         )
-        fig.update_yaxes(scaleanchor="x", scaleratio=1)
     else:
         fig.update_layout(
               template="plotly",
