@@ -137,7 +137,12 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
             "grafica": go.Figure().to_html(
                 full_html=False,
                 include_plotlyjs="cdn",
-                config={"responsive": True, "doubleClick": "reset"},
+                config={
+                    "responsive": True,
+                    "displayModeBar": True,
+                    "doubleClick": "reset",
+                    "scrollZoom": True,
+                },
             ),
         }
     values = [coef_x1 * x + coef_x2 * y for x, y in candidates]
@@ -190,8 +195,9 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
 
     if estilo == "cruz":
         fig.update_layout(
-            xaxis=dict(visible=False, range=[x_min, x_max], fixedrange=True),
-            yaxis=dict(visible=False, range=[y_min, y_max], fixedrange=True),
+            xaxis=dict(visible=False, range=[x_min, x_max], fixedrange=False),
+            yaxis=dict(visible=False, range=[y_min, y_max], fixedrange=False),
+            dragmode="pan",
             plot_bgcolor="white",
             uirevision="zoom-state",
             autosize=True,
@@ -235,7 +241,12 @@ def resolver_metodo_grafico(objetivo: str, coef_x1: float, coef_x2: float, restr
         "grafica": fig.to_html(
             full_html=False,
             include_plotlyjs="cdn",
-            config={"responsive": True, "doubleClick": "reset"},
+            config={
+                "responsive": True,
+                "displayModeBar": True,
+                "doubleClick": "reset",
+                "scrollZoom": True,
+            },
         ),
         "fig": fig,
     }
