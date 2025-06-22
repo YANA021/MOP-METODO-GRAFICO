@@ -12,6 +12,7 @@
       <th>Coef x₂</th>
       <th>Restricciones</th>
       <th>Fecha</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -23,6 +24,7 @@
       <td>{{ p.coef_x2 }}</td>
       <td>{{ p.restricciones }}</td>
       <td>{{ p.created_at|date:'Y-m-d H:i' }}</td>
+      <td><a class="btn btn-sm btn-primary" href="{% url 'ver_problema' p.id %}">Ver</a></td>
     </tr>
   {% endfor %}
   </tbody>
