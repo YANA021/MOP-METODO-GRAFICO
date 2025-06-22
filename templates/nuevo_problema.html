@@ -37,18 +37,22 @@
   </div>
 
   <div class="border p-3 rounded">
-    <label class="form-label">Límites de variables</label>
+    <label class="form-label">Rangos permitidos para cada variable</label>
     <div class="row g-2 mb-2">
       <div class="col-6 col-md-3">
+        <label class="form-label small" for="{{ form.x1_min.id_for_label }}">{{ form.x1_min.label }}</label>
         {{ form.x1_min }}
       </div>
       <div class="col-6 col-md-3">
+        <label class="form-label small" for="{{ form.x1_max.id_for_label }}">{{ form.x1_max.label }}</label>
         {{ form.x1_max }}
       </div>
       <div class="col-6 col-md-3">
+        <label class="form-label small" for="{{ form.x2_min.id_for_label }}">{{ form.x2_min.label }}</label>
         {{ form.x2_min }}
       </div>
       <div class="col-6 col-md-3">
+        <label class="form-label small" for="{{ form.x2_max.id_for_label }}">{{ form.x2_max.label }}</label>
         {{ form.x2_max }}
       </div>
     </div>
