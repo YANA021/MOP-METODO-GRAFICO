@@ -64,12 +64,20 @@ def metodo_grafico(request):
             grafica_cruz = resultado_cruz.get("grafica", "")
             post_data = request.POST.dict()
 
+            # remove non-serializable objects before storing in session
+            resultado_session = {
+                k: v
+                for k, v in resultado.items()
+                if k not in {"fig", "grafica"}
+            }
+
             request.session["resultado_metodo_grafico"] = {
                 "grafica_normal": grafica_normal,
                 "grafica_cruz": grafica_cruz,
-                "resultado": resultado,
+                "resultado": resultado_session,
                 "post_data": post_data,
             }
+            
             form = ProblemaPLForm()
             return redirect("resultado_metodo_grafico")
     else:

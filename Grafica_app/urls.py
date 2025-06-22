@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('metodo-grafico/', login_required(views.metodo_grafico), name='metodo_grafico'),
-    path(
+     path(
         'metodo-grafico/resultado/',
         login_required(views.resultado_metodo_grafico),
         name='resultado_metodo_grafico',
