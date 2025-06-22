@@ -173,8 +173,12 @@ def logout_view(request):
 @login_required
 def historial(request):
     """Display all ProblemaPL entries created by the logged in user."""
-    problemas = ProblemaPL.objects.filter(user=request.user).order_by("-created_at")
-    return render(request, "historial.html", {"problemas": problemas})
+    orden = request.GET.get("orden", "asc")
+    if orden not in {"asc", "desc"}:
+        orden = "asc"
+    ordering = "-created_at" if orden == "desc" else "created_at"
+    problemas = ProblemaPL.objects.filter(user=request.user).order_by(ordering)
+    return render(request, "historial.html", {"problemas": problemas, "orden": orden})
 
 
 @login_required
