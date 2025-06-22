@@ -36,6 +36,24 @@
     <input type="hidden" name="{{ form.restricciones.name }}" id="id_{{ form.restricciones.name }}">
   </div>
 
+  <div class="border p-3 rounded">
+    <label class="form-label">Límites de variables</label>
+    <div class="row g-2 mb-2">
+      <div class="col-6 col-md-3">
+        {{ form.x1_min }}
+      </div>
+      <div class="col-6 col-md-3">
+        {{ form.x1_max }}
+      </div>
+      <div class="col-6 col-md-3">
+        {{ form.x2_min }}
+      </div>
+      <div class="col-6 col-md-3">
+        {{ form.x2_max }}
+      </div>
+    </div>
+  </div>
+
   <div class="border p-3 rounded" id="restricciones-container">
     <label class="form-label">Restricciones</label>
     <div class="restriccion-row row g-2 align-items-center mb-2">
@@ -143,7 +161,7 @@ function toggleGraph(tipo) {
   <div class="alert alert-success">
     Valor óptimo Z = {{ resultado.z|floatformat:2 }} en el segmento entre ({{ resultado.opt_segment.0.0|floatformat:2 }}, {{ resultado.opt_segment.0.1|floatformat:2 }}) y ({{ resultado.opt_segment.1.0|floatformat:2 }}, {{ resultado.opt_segment.1.1|floatformat:2 }})
   </div>
-  {% else %}
+  {% elif resultado.status == 'optimo' %}
   <div class="alert alert-success">
     Valor óptimo Z = {{ resultado.z|floatformat:2 }} en ({{ resultado.x|floatformat:2 }}, {{ resultado.y|floatformat:2 }})
   </div>
