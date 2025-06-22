@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .forms import ProblemaPLForm
 from .utils import export_resultado
 from .models import ProblemaPL
 from .solver import resolver_metodo_grafico
+import json
 import io
 from openpyxl import Workbook
 from docx import Document
@@ -174,6 +175,46 @@ def historial(request):
     """Display all ProblemaPL entries created by the logged in user."""
     problemas = ProblemaPL.objects.filter(user=request.user).order_by("-created_at")
     return render(request, "historial.html", {"problemas": problemas})
+
+
+@login_required
+def ver_problema(request, pk):
+    """Reexecute a saved problem and display the result."""
+    problema = get_object_or_404(ProblemaPL, pk=pk, user=request.user)
+    post_data = {
+        "objetivo": problema.objetivo,
+        "coef_x1": problema.coef_x1,
+        "coef_x2": problema.coef_x2,
+        "restricciones": json.dumps(problema.restricciones),
+    }
+    form = ProblemaPLForm(post_data)
+    if form.is_valid():
+        bounds = {
+            "x1_min": form.cleaned_data.get("x1_min"),
+            "x1_max": form.cleaned_data.get("x1_max"),
+            "x2_min": form.cleaned_data.get("x2_min"),
+            "x2_max": form.cleaned_data.get("x2_max"),
+        }
+        resultado = resolver_metodo_grafico(
+            form.cleaned_data["objetivo"],
+            form.cleaned_data["coef_x1"],
+            form.cleaned_data["coef_x2"],
+            form.cleaned_data["restricciones"],
+            bounds=bounds,
+        )
+        fig = resultado.get("fig")
+        grafico = fig.to_html(full_html=False) if fig is not None else ""
+        resultado = {k: v for k, v in resultado.items() if k != "fig"}
+        context = {
+            "form": ProblemaPLForm(),
+            "mensaje": "",
+            "resultado": resultado,
+            "grafico": grafico,
+            "post_data": post_data,
+        }
+        return render(request, "resultado.html", context)
+    messages.error(request, "No se pudo cargar el problema seleccionado.")
+    return redirect("historial")
 
 
 def resultado_metodo_grafico(request):

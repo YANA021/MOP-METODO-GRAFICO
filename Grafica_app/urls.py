@@ -25,6 +25,7 @@ urlpatterns = [
     path('perfil/', login_required(views.perfil_show), name='perfil_show'),
     path('perfil/editar/', login_required(views.perfil_edit), name='perfil_edit'),
     path('historial/', login_required(views.historial), name='historial'),
+    path('historial/<int:pk>/', login_required(views.ver_problema), name='ver_problema'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register, name='register'),
     path('logout/', views.logout_view, name='logout'),
