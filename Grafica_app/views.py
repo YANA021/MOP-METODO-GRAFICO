@@ -22,8 +22,7 @@ from django.contrib.auth.decorators import login_required
 def metodo_grafico(request):
     mensaje = ""
     resultado = None
-    grafica_normal = ""
-    grafica_cruz = ""
+    grafico = ""
     post_data = None
     if request.method == "POST":
         form = ProblemaPLForm(request.POST)
@@ -43,43 +42,30 @@ def metodo_grafico(request):
                 "x2_min": form.cleaned_data.get("x2_min"),
                 "x2_max": form.cleaned_data.get("x2_max"),
             }
-            resultado_normal = resolver_metodo_grafico(
+            resultado = resolver_metodo_grafico(
                 form.cleaned_data["objetivo"],
                 form.cleaned_data["coef_x1"],
                 form.cleaned_data["coef_x2"],
                 form.cleaned_data["restricciones"],
                 bounds=bounds,
-                estilo="normal",
             )
-            resultado_cruz = resolver_metodo_grafico(
-                form.cleaned_data["objetivo"],
-                form.cleaned_data["coef_x1"],
-                form.cleaned_data["coef_x2"],
-                form.cleaned_data["restricciones"],
-                bounds=bounds,
-                estilo="cruz",
-            )
-            resultado = resultado_normal
-            grafica_normal = resultado_normal.get("grafica", "")
-            grafica_cruz = resultado_cruz.get("grafica", "")
+
+            fig = resultado.get("fig")
+            if fig is not None:
+                grafico = fig.to_html(full_html=False)
+
+            # remove non-serializable objects before rendering
+            resultado = {k: v for k, v in resultado.items() if k != "fig"}
             post_data = request.POST.dict()
-
-            # remove non-serializable objects before storing in session
-            resultado_session = {
-                k: v
-                for k, v in resultado.items()
-                if k not in {"fig", "grafica"}
-            }
-
-            request.session["resultado_metodo_grafico"] = {
-                "grafica_normal": grafica_normal,
-                "grafica_cruz": grafica_cruz,
-                "resultado": resultado_session,
+            form = ProblemaPLForm()
+            context = {
+                "form": form,
+                "mensaje": mensaje,
+                "resultado": resultado,
+                "grafico": grafico,
                 "post_data": post_data,
             }
-            
-            form = ProblemaPLForm()
-            return redirect("resultado_metodo_grafico")
+            return render(request, "resultado.html", context)
     else:
         form = ProblemaPLForm()
     context = {
