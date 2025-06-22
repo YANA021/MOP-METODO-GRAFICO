@@ -62,17 +62,21 @@ def metodo_grafico(request):
             resultado = resultado_normal
             grafica_normal = resultado_normal.get("grafica", "")
             grafica_cruz = resultado_cruz.get("grafica", "")
-            post_data = request.POST
+            post_data = request.POST.dict()
+
+            request.session["resultado_metodo_grafico"] = {
+                "grafica_normal": grafica_normal,
+                "grafica_cruz": grafica_cruz,
+                "resultado": resultado,
+                "post_data": post_data,
+            }
             form = ProblemaPLForm()
+            return redirect("resultado_metodo_grafico")
     else:
         form = ProblemaPLForm()
     context = {
         "form": form,
         "mensaje": mensaje,
-        "grafica_normal": grafica_normal,
-        "grafica_cruz": grafica_cruz,
-        "resultado": resultado,
-        "post_data": post_data,
     }
     return render(request, "nuevo_problema.html", context)
 
@@ -176,3 +180,11 @@ def historial(request):
     """Display all ProblemaPL entries created by the logged in user."""
     problemas = ProblemaPL.objects.filter(user=request.user).order_by("-created_at")
     return render(request, "historial.html", {"problemas": problemas})
+
+
+def resultado_metodo_grafico(request):
+    """Display the latest result stored in session."""
+    data = request.session.get("resultado_metodo_grafico")
+    if not data:
+        return redirect("metodo_grafico")
+    return render(request, "resultado.html", data)
