@@ -43,7 +43,7 @@ def metodo_grafico(request):
                 "x2_min": form.cleaned_data.get("x2_min"),
                 "x2_max": form.cleaned_data.get("x2_max"),
             }
-            resultado_normal = resolver_metodo_grafico(
+            resultado = resolver_metodo_grafico(
                 form.cleaned_data["objetivo"],
                 form.cleaned_data["coef_x1"],
                 form.cleaned_data["coef_x2"],
@@ -51,27 +51,16 @@ def metodo_grafico(request):
                 bounds=bounds,
                 estilo="normal",
             )
-            resultado_cruz = resolver_metodo_grafico(
-                form.cleaned_data["objetivo"],
-                form.cleaned_data["coef_x1"],
-                form.cleaned_data["coef_x2"],
-                form.cleaned_data["restricciones"],
-                bounds=bounds,
-                estilo="cruz",
-            )
-            resultado = resultado_normal
-            grafica_normal = resultado_normal.get("grafica", "")
-            grafica_cruz = resultado_cruz.get("grafica", "")
+            fig = resultado.get("fig")
+            grafico = fig.to_html(full_html=False) if fig else ""
             post_data = request.POST.dict()
 
-            request.session["resultado_metodo_grafico"] = {
-                "grafica_normal": grafica_normal,
-                "grafica_cruz": grafica_cruz,
+            context = {
+                "grafico": grafico,
                 "resultado": resultado,
                 "post_data": post_data,
             }
-            form = ProblemaPLForm()
-            return redirect("resultado_metodo_grafico")
+            return render(request, "resultado.html", context)
     else:
         form = ProblemaPLForm()
     context = {
