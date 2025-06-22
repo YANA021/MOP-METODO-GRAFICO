@@ -2,6 +2,13 @@
 {% block title %}Historial{% endblock %}
 {% block content %}
 <h1 class="mb-4">Historial de Problemas</h1>
+<form method="get" class="mb-3 d-flex align-items-center">
+  <label for="orden" class="me-2">Ordenar por:</label>
+  <select id="orden" name="orden" class="form-select w-auto" onchange="this.form.submit()">
+    <option value="asc" {% if orden == 'asc' %}selected{% endif %}>Primeros agregados</option>
+    <option value="desc" {% if orden == 'desc' %}selected{% endif %}>Últimos agregados</option>
+  </select>
+</form>
 {% if problemas %}
 <table class="table">
   <thead>
