@@ -25,33 +25,33 @@ class ProblemaPLForm(forms.Form):
         ),
     )
     x1_min = forms.FloatField(
-        label="Límite inferior x1",
+        label="Valor mínimo permitido para x₁",
         required=False,
         initial=0,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Min x₁"}
+            attrs={"class": "form-control", "placeholder": "Mínimo x₁"}
         ),
     )
     x1_max = forms.FloatField(
-        label="Límite superior x1",
+        label="Valor máximo permitido para x₁",
         required=False,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Max x₁"}
+            attrs={"class": "form-control", "placeholder": "Máximo x₁"}
         ),
     )
     x2_min = forms.FloatField(
-        label="Límite inferior x2",
+        label="Valor mínimo permitido para x₂",
         required=False,
         initial=0,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Min x₂"}
+            attrs={"class": "form-control", "placeholder": "Mínimo x₂"}
         ),
     )
     x2_max = forms.FloatField(
-        label="Límite superior x2",
+        label="Valor máximo permitido para x₂",
         required=False,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Max x₂"}
+            attrs={"class": "form-control", "placeholder": "Máximo x₂"}
         ),
     )
     restricciones = forms.CharField(widget=forms.HiddenInput())
