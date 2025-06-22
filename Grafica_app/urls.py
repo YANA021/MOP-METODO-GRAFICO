@@ -8,6 +8,11 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('metodo-grafico/', login_required(views.metodo_grafico), name='metodo_grafico'),
     path(
+        'metodo-grafico/resultado/',
+        login_required(views.resultado_metodo_grafico),
+        name='resultado_metodo_grafico',
+    ),
+    path(
         'metodo-grafico/export/<str:formato>/',
         login_required(views.exportar_resultado),
         name='exportar_resultado',
