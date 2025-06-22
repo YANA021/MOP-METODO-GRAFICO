@@ -6,10 +6,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th>ID</th>
+      <th>#</th>
       <th>Objetivo</th>
-      <th>Coef x₁</th>
-      <th>Coef x₂</th>
+      <th>Función Objetivo</th>
       <th>Restricciones</th>
       <th>Fecha</th>
       <th>Acciones</th>
@@ -18,11 +17,14 @@
   <tbody>
   {% for p in problemas %}
     <tr>
-      <td>{{ p.id }}</td>
+      <td>{{ forloop.counter }}</td>
       <td>{{ p.get_objetivo_display }}</td>
-      <td>{{ p.coef_x1 }}</td>
-      <td>{{ p.coef_x2 }}</td>
-      <td>{{ p.restricciones }}</td>
+      <td>Z = {{ p.coef_x1 }}x₁ {% if p.coef_x2 >= 0 %}+{% endif %}{{ p.coef_x2 }}x₂</td>
+      <td>
+        {% for r in p.restricciones %}
+          {{ r.coef_x1 }}x₁ {% if r.coef_x2 >= 0 %}+{% endif %}{{ r.coef_x2 }}x₂ {{ r.operador }} {{ r.valor }}<br>
+        {% endfor %}
+      </td>
       <td>{{ p.created_at|date:'Y-m-d H:i' }}</td>
       <td><a class="btn btn-sm btn-primary" href="{% url 'ver_problema' p.id %}">Ver</a></td>
     </tr>
