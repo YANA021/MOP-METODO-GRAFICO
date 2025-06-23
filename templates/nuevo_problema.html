@@ -3,7 +3,7 @@
 {% block title %}Nuevo Problema{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Nuevo Problema PL</h1>
+<h1 class="mb-4">Nuevo Problema de Programación Lineal</h1>
 {% if mensaje %}
 <div class="alert alert-success">{{ mensaje }}</div>
 {% endif %}
@@ -37,7 +37,7 @@
   </div>
 
   <div class="border p-3 rounded">
-    <label class="form-label">Rangos permitidos para cada variable</label>
+  <label class="form-label">Rango de valores permitidos para cada variable</label>
     <table class="table table-bordered table-sm mb-2">
       <thead>
         <tr>
@@ -77,13 +77,13 @@
     <label class="form-label">Restricciones</label>
     <div class="restriccion-row row g-2 align-items-center mb-2">
       <div class="col-6 col-md-3">
-        <input type="number" step="any" name="coef_x1[]" class="form-control" placeholder="Coef x₁">
+        <input type="number" step="any" name="coef_x1[]" class="form-control" placeholder="Coeficiente de x₁">
       </div>
       <div class="col-auto">
         <span>x₁ +</span>
       </div>
       <div class="col-6 col-md-3">
-        <input type="number" step="any" name="coef_x2[]" class="form-control" placeholder="Coef x₂">
+        <input type="number" step="any" name="coef_x2[]" class="form-control" placeholder="Coeficiente de x₂">
       </div>
       <div class="col-auto">
         <span>x₂</span>
@@ -96,7 +96,7 @@
         </select>
       </div>
       <div class="col-6 col-md-2">
-        <input type="number" step="any" name="valor[]" class="form-control" placeholder="Valor">
+        <input type="number" step="any" name="valor[]" class="form-control" placeholder="Valor del lado derecho">
       </div>
       <div class="col-auto">
         <button class="btn btn-danger remove-restriccion" type="button">&minus;</button>
@@ -104,10 +104,10 @@
     </div>
   </div>
   <div>
-    <button id="add-restriccion" class="btn btn-secondary mb-3" type="button">+ Agregar restricción</button>
+    <button id="add-restriccion" class="btn btn-secondary mb-3" type="button">Agregar nueva restricción</button>
   </div>
   <div>
-    <button class="btn btn-primary" type="submit">Graficar</button>
+    <button class="btn btn-primary" type="submit">Resolver y mostrar gráfica</button>
   </div>
 </form>
 <script src="{% static 'js/restricciones.js' %}"></script>
