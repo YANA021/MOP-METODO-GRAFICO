@@ -176,9 +176,19 @@ def historial(request):
     orden = request.GET.get("orden", "asc")
     if orden not in {"asc", "desc"}:
         orden = "asc"
-    ordering = "-created_at" if orden == "desc" else "created_at"
-    problemas = ProblemaPL.objects.filter(user=request.user).order_by(ordering)
-    return render(request, "historial.html", {"problemas": problemas, "orden": orden})
+
+    # build a list of problems sorted by creation date to keep
+    # stable numbering regardless of the displayed order
+    base_qs = ProblemaPL.objects.filter(user=request.user).order_by("created_at")
+    enumerados = [(idx + 1, p) for idx, p in enumerate(base_qs)]
+    if orden == "desc":
+        enumerados.reverse()
+
+    return render(
+        request,
+        "historial.html",
+        {"problemas": enumerados, "orden": orden},
+    )
 
 
 @login_required
