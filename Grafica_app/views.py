@@ -200,8 +200,8 @@ def historial(request):
         except ValueError:
             fecha_hasta = None
 
-    base_qs = qs.order_by("created_at")
-    numero_por_id = {p.id: idx for idx, p in enumerate(base_qs, 1)}
+    todos = ProblemaPL.objects.filter(user=request.user).order_by("created_at")
+    numero_por_id = {p.id: idx for idx, p in enumerate(todos, 1)}
 
     problemas = list(qs.order_by(ordering))
     for p in problemas:
