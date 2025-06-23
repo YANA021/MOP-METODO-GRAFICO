@@ -33,29 +33,29 @@
 {% if problemas %}
 <table class="table">
   <thead>
-    <tr>
-      <th>#</th>
-      <th>Objetivo</th>
-      <th>Función Objetivo</th>
-      <th>Restricciones</th>
-      <th>Fecha</th>
-      <th>Ir al problema</th>
-    </tr>
+      <tr>
+        <th class="text-black dark:text-white">#</th>
+        <th class="text-black dark:text-white">Objetivo</th>
+        <th class="text-black dark:text-white">Función Objetivo</th>
+        <th class="text-black dark:text-white">Restricciones</th>
+        <th class="text-black dark:text-white">Fecha</th>
+        <th class="text-black dark:text-white">Ir al problema</th>
+      </tr>
   </thead>
   <tbody>
   {% for p in problemas %}
-    <tr>
-      <td>{{ p.numero }}</td>
-      <td>{{ p.get_objetivo_display }}</td>
-      <td>Z = {{ p.coef_x1 }}x₁ {% if p.coef_x2 >= 0 %}+{% endif %}{{ p.coef_x2 }}x₂</td>
-      <td>
-        {% for r in p.restricciones %}
-          {{ r.coef_x1 }}x₁ {% if r.coef_x2 >= 0 %}+{% endif %}{{ r.coef_x2 }}x₂ {{ r.operador }} {{ r.valor }}<br>
-        {% endfor %}
-      </td>
-      <td>{{ p.created_at|date:'Y-m-d H:i' }}</td>
-      <td><a class="btn btn-sm btn-primary" href="{% url 'ver_problema' p.id %}">Ver</a></td>
-    </tr>
+      <tr>
+        <td class="text-black dark:text-white">{{ p.numero }}</td>
+        <td class="text-black dark:text-white">{{ p.get_objetivo_display }}</td>
+        <td class="text-black dark:text-white">Z = {{ p.coef_x1 }}x₁ {% if p.coef_x2 >= 0 %}+{% endif %}{{ p.coef_x2 }}x₂</td>
+        <td class="text-black dark:text-white">
+          {% for r in p.restricciones %}
+            {{ r.coef_x1 }}x₁ {% if r.coef_x2 >= 0 %}+{% endif %}{{ r.coef_x2 }}x₂ {{ r.operador }} {{ r.valor }}<br>
+          {% endfor %}
+        </td>
+        <td class="text-black dark:text-white">{{ p.created_at|date:'Y-m-d H:i' }}</td>
+        <td class="text-black dark:text-white"><a class="btn btn-sm btn-primary" href="{% url 'ver_problema' p.id %}">Ver</a></td>
+      </tr>
   {% endfor %}
   </tbody>
 </table>
