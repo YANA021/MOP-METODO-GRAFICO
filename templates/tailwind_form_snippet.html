@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario accesible</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-6 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
+  <form class="max-w-md mx-auto space-y-4">
+    <input
+      type="text"
+      placeholder="Nombre"
+      class="w-full p-2 border rounded placeholder-gray-500 dark:placeholder-gray-400 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
+    />
+    <input
+      type="email"
+      placeholder="Correo electrónico"
+      class="w-full p-2 border rounded placeholder-gray-500 dark:placeholder-gray-400 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
+    />
+    <button
+      type="submit"
+      disabled
+      class="w-full py-2 px-4 border rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white cursor-not-allowed"
+    >
+      Enviar
+    </button>
+  </form>
+</body>
+</html>
