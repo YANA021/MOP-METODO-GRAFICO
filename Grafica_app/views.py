@@ -55,16 +55,17 @@ def metodo_grafico(request):
             if fig is not None:
                 grafico = fig.to_html(full_html=False)
 
-            # remove non-serializable objects before rendering
             resultado = {k: v for k, v in resultado.items() if k != "fig"}
             post_data = request.POST.dict()
             form = ProblemaPLForm()
+
             context = {
                 "form": form,
                 "mensaje": mensaje,
                 "resultado": resultado,
                 "grafico": grafico,
                 "post_data": post_data,
+                "restricciones_json": json.dumps(form.cleaned_data.get('restricciones', []))
             }
             return render(request, "resultado.html", context)
     else:

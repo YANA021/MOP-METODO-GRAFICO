@@ -115,6 +115,10 @@
     </button>
   </div>
 </form>
+<!-- Añadir debug de restricciones -->
+<input type="hidden" name="restricciones" value="{{ restricciones_json|default:'[]' }}">
+
+<!-- Verificar carga de scripts -->
 <script src="{% static 'js/restricciones.js' %}"></script>
 <script src="{% static 'js/ayuda.js' %}"></script>
 {% if grafica_normal %}
