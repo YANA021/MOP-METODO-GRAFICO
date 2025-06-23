@@ -172,31 +172,50 @@ def logout_view(request):
 
 @login_required
 def historial(request):
-    """Display all ProblemaPL entries created by the logged in user."""
+    """Display all ProblemaPL entries created by the logged in user with optional filters."""
+
     orden = request.GET.get("orden", "asc")
     if orden not in {"asc", "desc"}:
         orden = "asc"
     ordering = "-created_at" if orden == "desc" else "created_at"
 
-    # Always number problems using their creation order so the enumeration
-    # remains consistent when applying different sort orders. First fetch
-    # all entries ascending by creation date and map each id to its index.
-    base_qs = ProblemaPL.objects.filter(user=request.user).order_by("created_at")
+    objetivo = request.GET.get("objetivo", "all")
+    fecha_desde = request.GET.get("desde")
+    fecha_hasta = request.GET.get("hasta")
+
+    qs = ProblemaPL.objects.filter(user=request.user)
+
+    if objetivo in {"max", "min"}:
+        qs = qs.filter(objetivo=objetivo)
+
+    if fecha_desde:
+        try:
+            qs = qs.filter(created_at__date__gte=fecha_desde)
+        except ValueError:
+            fecha_desde = None
+
+    if fecha_hasta:
+        try:
+            qs = qs.filter(created_at__date__lte=fecha_hasta)
+        except ValueError:
+            fecha_hasta = None
+
+    base_qs = qs.order_by("created_at")
     numero_por_id = {p.id: idx for idx, p in enumerate(base_qs, 1)}
 
-    # Then obtain the problems in the requested order and attach the
-    # persistent enumeration.
-    problemas = list(
-        ProblemaPL.objects.filter(user=request.user).order_by(ordering)
-    )
+    problemas = list(qs.order_by(ordering))
     for p in problemas:
         p.numero = numero_por_id.get(p.id)
 
-    return render(
-        request,
-        "historial.html",
-        {"problemas": problemas, "orden": orden},
-    )
+    context = {
+        "problemas": problemas,
+        "orden": orden,
+        "objetivo": objetivo,
+        "desde": fecha_desde,
+        "hasta": fecha_hasta,
+    }
+
+    return render(request, "historial.html", context)
 
 
 @login_required
