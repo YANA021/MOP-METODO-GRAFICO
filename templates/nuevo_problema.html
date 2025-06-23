@@ -9,24 +9,24 @@
 {% endif %}
 <form id="pl-form" method="post" class="vstack gap-4">
   {% csrf_token %}
-  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800">
+  <div class="border rounded-3 p-4 mt-3">
     <div class="mb-3">
       <label class="form-label text-gray-800">Función Objetivo</label>
       <div class="row g-3 align-items-center justify-content-center text-center">
         <div class="col-auto">
-          {{ form.objetivo.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
+           {{ form.objetivo }}
         </div>
         <div class="col-auto">
           <span class="fw-bold">Z =</span>
         </div>
         <div class="col-12 col-md-3">
-          {{ form.coef_x1.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full'}) }}
+         {{ form.coef_x1 }}
         </div>
         <div class="col-auto">
           <span>x₁ +</span>
         </div>
         <div class="col-12 col-md-3">
-          {{ form.coef_x2.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full'}) }}
+           {{ form.coef_x2 }}
         </div>
         <div class="col-auto">
           <span>x₂</span>
@@ -51,22 +51,22 @@
           <td>x₁</td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x1_min.id_for_label }}">{{ form.x1_min.label }}</label>
-            {{ form.x1_min.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
+            {{ form.x1_min }}
           </td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x1_max.id_for_label }}">{{ form.x1_max.label }}</label>
-            {{ form.x1_max.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
+            {{ form.x1_max }}
           </td>
         </tr>
         <tr>
           <td>x₂</td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x2_min.id_for_label }}">{{ form.x2_min.label }}</label>
-            {{ form.x2_min.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
+            {{ form.x2_min }}
           </td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x2_max.id_for_label }}">{{ form.x2_max.label }}</label>
-            {{ form.x2_max.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
+             {{ form.x2_max }}
           </td>
         </tr>
       </tbody>
@@ -77,14 +77,13 @@
     <label class="form-label text-gray-800">Restricciones</label>
     <div class="restriccion-row row g-3 align-items-center mb-3 justify-content-center text-center">
       <div class="col-6 col-md-3">
-        <input type="number" step="any" name="coef_x1[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₁">
+       <input type="number" step="any" name="coef_x1[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₁">
       </div>
       <div class="col-auto">
         <span>x₁ +</span>
       </div>
       <div class="col-6 col-md-3">
-        <input type="number" step="any" name="coef_x2[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₂">
-      </div>
+        <input type="number" step="any" name="coef_x2[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₂">      </div>
       <div class="col-auto">
         <span>x₂</span>
       </div>
@@ -96,7 +95,7 @@
         </select>
       </div>
       <div class="col-6 col-md-2">
-        <input type="number" step="any" name="valor[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Valor del lado derecho">
+        <input type="number" step="any" name="valor[]" class="form-control" placeholder="Valor del lado derecho">
       </div>
       <div class="col-auto">
         <button class="btn btn-danger remove-restriccion" type="button"><i class="bi bi-dash-circle"></i></button>
@@ -104,7 +103,7 @@
     </div>
   </div>
   <div>
-    <button id="add-restriccion" type="button" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-md mb-3">
+     <button id="add-restriccion" type="button" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-md mb-3">
       <i class="fa-solid fa-plus mr-2"></i>
       Agregar nueva restricción
     </button>
