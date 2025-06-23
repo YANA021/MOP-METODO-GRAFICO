@@ -15,13 +15,13 @@ class ProblemaPLForm(forms.Form):
     coef_x1 = forms.FloatField(
         label="Coeficiente x1",
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Coef x₁"}
+            attrs={"class": "form-control", "placeholder": "Coeficiente de x₁"}
         ),
     )
     coef_x2 = forms.FloatField(
         label="Coeficiente x2",
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Coef x₂"}
+            attrs={"class": "form-control", "placeholder": "Coeficiente de x₂"}
         ),
     )
     x1_min = forms.FloatField(
@@ -36,7 +36,7 @@ class ProblemaPLForm(forms.Form):
         label="Valor máximo para x1",
         required=False,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Máximo permitido para x₁"}
+            attrs={"class": "form-control", "placeholder": "Valor máximo permitido para x₁"}
         ),
     )
     x2_min = forms.FloatField(
