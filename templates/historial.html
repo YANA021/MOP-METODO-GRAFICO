@@ -24,7 +24,7 @@
   <tbody>
   {% for p in problemas %}
     <tr>
-      <td>{{ forloop.counter }}</td>
+      <td>{{ p.numero }}</td>
       <td>{{ p.get_objetivo_display }}</td>
       <td>Z = {{ p.coef_x1 }}x₁ {% if p.coef_x2 >= 0 %}+{% endif %}{{ p.coef_x2 }}x₂</td>
       <td>
