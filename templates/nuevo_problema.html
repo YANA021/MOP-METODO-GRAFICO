@@ -7,26 +7,26 @@
 {% if mensaje %}
 <div class="alert alert-success">{{ mensaje }}</div>
 {% endif %}
-<form id="pl-form" method="post" class="vstack gap-3">
+<form id="pl-form" method="post" class="vstack gap-4">
   {% csrf_token %}
-  <div class="border p-3 rounded">
+  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800">
     <div class="mb-3">
-      <label class="form-label">Función Objetivo</label>
-      <div class="row g-2 align-items-center">
+      <label class="form-label text-gray-800">Función Objetivo</label>
+      <div class="row g-3 align-items-center justify-content-center text-center">
         <div class="col-auto">
-          {{ form.objetivo }}
+          {{ form.objetivo.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
         </div>
         <div class="col-auto">
           <span class="fw-bold">Z =</span>
         </div>
         <div class="col-12 col-md-3">
-          {{ form.coef_x1 }}
+          {{ form.coef_x1.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full'}) }}
         </div>
         <div class="col-auto">
           <span>x₁ +</span>
         </div>
         <div class="col-12 col-md-3">
-          {{ form.coef_x2 }}
+          {{ form.coef_x2.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full'}) }}
         </div>
         <div class="col-auto">
           <span>x₂</span>
@@ -36,8 +36,8 @@
     <input type="hidden" name="{{ form.restricciones.name }}" id="id_{{ form.restricciones.name }}">
   </div>
 
-  <div class="border p-3 rounded">
-  <label class="form-label">Rango de valores permitidos para cada variable</label>
+  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800">
+  <label class="form-label text-gray-800">Rango de valores permitidos para cada variable</label>
     <table class="table table-bordered table-sm mb-2">
       <thead>
         <tr>
@@ -51,63 +51,69 @@
           <td>x₁</td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x1_min.id_for_label }}">{{ form.x1_min.label }}</label>
-            {{ form.x1_min }}
+            {{ form.x1_min.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
           </td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x1_max.id_for_label }}">{{ form.x1_max.label }}</label>
-            {{ form.x1_max }}
+            {{ form.x1_max.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
           </td>
         </tr>
         <tr>
           <td>x₂</td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x2_min.id_for_label }}">{{ form.x2_min.label }}</label>
-            {{ form.x2_min }}
+            {{ form.x2_min.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
           </td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x2_max.id_for_label }}">{{ form.x2_max.label }}</label>
-            {{ form.x2_max }}
+            {{ form.x2_max.as_widget(attrs={'class':'bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800'}) }}
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="border p-3 rounded" id="restricciones-container">
-    <label class="form-label">Restricciones</label>
-    <div class="restriccion-row row g-2 align-items-center mb-2">
+  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800" id="restricciones-container">
+    <label class="form-label text-gray-800">Restricciones</label>
+    <div class="restriccion-row row g-3 align-items-center mb-3 justify-content-center text-center">
       <div class="col-6 col-md-3">
-        <input type="number" step="any" name="coef_x1[]" class="form-control" placeholder="Coeficiente de x₁">
+        <input type="number" step="any" name="coef_x1[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₁">
       </div>
       <div class="col-auto">
         <span>x₁ +</span>
       </div>
       <div class="col-6 col-md-3">
-        <input type="number" step="any" name="coef_x2[]" class="form-control" placeholder="Coeficiente de x₂">
+        <input type="number" step="any" name="coef_x2[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₂">
       </div>
       <div class="col-auto">
         <span>x₂</span>
       </div>
       <div class="col-6 col-md-2">
-        <select name="operador[]" class="form-select">
+        <select name="operador[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full">
           <option value="<=">≤</option>
           <option value=">=">≥</option>
           <option value="=">=</option>
         </select>
       </div>
       <div class="col-6 col-md-2">
-        <input type="number" step="any" name="valor[]" class="form-control" placeholder="Valor del lado derecho">
+        <input type="number" step="any" name="valor[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Valor del lado derecho">
       </div>
       <div class="col-auto">
-        <button class="btn btn-danger remove-restriccion" type="button">&minus;</button>
+        <button class="btn btn-danger remove-restriccion" type="button"><i class="bi bi-dash-circle"></i></button>
       </div>
     </div>
   </div>
   <div>
-    <button id="add-restriccion" class="btn btn-secondary mb-3" type="button">Agregar nueva restricción</button>
+    <button id="add-restriccion" type="button" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-md mb-3">
+      <i class="fa-solid fa-plus mr-2"></i>
+      Agregar nueva restricción
+    </button>
   </div>
   <div>
-    <button class="btn btn-primary" type="submit">Resolver y mostrar gráfica</button>
+    <button type="submit" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-md">
+      <i class="fa-solid fa-chart-line mr-2"></i>
+      Resolver y mostrar gráfica
+    </button>
   </div>
 </form>
 <script src="{% static 'js/restricciones.js' %}"></script>

@@ -1,0 +1,9 @@
+.dark-mode .form-control,
+.dark-mode .form-select {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.dark-mode .form-control::placeholder {
+  color: #6c757d;
+}
