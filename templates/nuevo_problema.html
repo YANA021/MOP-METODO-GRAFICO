@@ -11,25 +11,25 @@
   {% csrf_token %}
   <div class="border rounded-3 p-4 mt-3">
     <div class="mb-3">
-      <label class="form-label text-gray-800">Función Objetivo</label>
+      <label class="form-label text-black dark:text-white">Función Objetivo</label>
       <div class="row g-3 align-items-center justify-content-center text-center">
         <div class="col-auto">
            {{ form.objetivo }}
         </div>
         <div class="col-auto">
-          <span class="fw-bold">Z =</span>
+          <span class="fw-bold text-black dark:text-white">Z =</span>
         </div>
         <div class="col-12 col-md-3">
          {{ form.coef_x1 }}
         </div>
         <div class="col-auto">
-          <span>x₁ +</span>
+          <span class="text-black dark:text-white">x₁ +</span>
         </div>
         <div class="col-12 col-md-3">
            {{ form.coef_x2 }}
         </div>
         <div class="col-auto">
-          <span>x₂</span>
+          <span class="text-black dark:text-white">x₂</span>
         </div>
       </div>
     </div>
@@ -37,18 +37,18 @@
   </div>
 
   <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800">
-  <label class="form-label text-gray-800">Rango de valores permitidos para cada variable</label>
+  <label class="form-label text-black dark:text-white">Rango de valores permitidos para cada variable</label>
     <table class="table table-bordered table-sm mb-2">
       <thead>
-        <tr>
-          <th>Variable</th>
-          <th>Mínimo</th>
-          <th>Máximo</th>
-        </tr>
+          <tr>
+            <th class="text-black dark:text-white">Variable</th>
+            <th class="text-black dark:text-white">Mínimo</th>
+            <th class="text-black dark:text-white">Máximo</th>
+          </tr>
       </thead>
       <tbody>
         <tr>
-          <td>x₁</td>
+          <td class="text-black dark:text-white">x₁</td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x1_min.id_for_label }}">{{ form.x1_min.label }}</label>
             {{ form.x1_min }}
@@ -59,7 +59,7 @@
           </td>
         </tr>
         <tr>
-          <td>x₂</td>
+          <td class="text-black dark:text-white">x₂</td>
           <td>
             <label class="form-label small visually-hidden" for="{{ form.x2_min.id_for_label }}">{{ form.x2_min.label }}</label>
             {{ form.x2_min }}
@@ -74,18 +74,18 @@
   </div>
 
   <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800" id="restricciones-container">
-    <label class="form-label text-gray-800">Restricciones</label>
+    <label class="form-label text-black dark:text-white">Restricciones</label>
     <div class="restriccion-row row g-3 align-items-center mb-3 justify-content-center text-center">
       <div class="col-6 col-md-3">
        <input type="number" step="any" name="coef_x1[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₁">
       </div>
       <div class="col-auto">
-        <span>x₁ +</span>
+        <span class="text-black dark:text-white">x₁ +</span>
       </div>
       <div class="col-6 col-md-3">
         <input type="number" step="any" name="coef_x2[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₂">      </div>
       <div class="col-auto">
-        <span>x₂</span>
+        <span class="text-black dark:text-white">x₂</span>
       </div>
       <div class="col-6 col-md-2">
         <select name="operador[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full">
@@ -128,23 +128,23 @@
   <div id="plot-controls" class="mt-2">
     <div class="form-check form-check-inline">
       <input class="form-check-input plot-toggle" type="checkbox" id="chk-rest" value="restricciones" checked>
-      <label class="form-check-label" for="chk-rest">Restricciones</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-rest">Restricciones</label>
     </div>
     <div class="form-check form-check-inline">
       <input class="form-check-input plot-toggle" type="checkbox" id="chk-obj" value="objetivo" checked>
-      <label class="form-check-label" for="chk-obj">Función objetivo</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-obj">Función objetivo</label>
     </div>
     <div class="form-check form-check-inline">
       <input class="form-check-input plot-toggle" type="checkbox" id="chk-int" value="intersecciones" checked>
-      <label class="form-check-label" for="chk-int">Puntos de intersección</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-int">Puntos de intersección</label>
     </div>
     <div class="form-check form-check-inline">
       <input class="form-check-input plot-toggle" type="checkbox" id="chk-reg" value="region" checked>
-      <label class="form-check-label" for="chk-reg">Región factible</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-reg">Región factible</label>
     </div>
     <div class="form-check form-check-inline">
       <input class="form-check-input" type="checkbox" id="chk-grid" checked>
-      <label class="form-check-label" for="chk-grid">Cuadrícula</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-grid">Cuadrícula</label>
     </div>
   </div>
   <div class="mt-2 d-flex gap-2">
@@ -168,16 +168,21 @@ function toggleGraph(tipo) {
   <h5>Vértices</h5>
   <table class="table table-bordered table-sm">
     <thead>
-      <tr><th>Vértice</th><th>x₁</th><th>x₂</th><th>Z</th></tr>
+      <tr>
+        <th class="text-black dark:text-white">Vértice</th>
+        <th class="text-black dark:text-white">x₁</th>
+        <th class="text-black dark:text-white">x₂</th>
+        <th class="text-black dark:text-white">Z</th>
+      </tr>
     </thead>
     <tbody>
       {% for v in resultado.vertices %}
-      <tr{% if v.x == resultado.x and v.y == resultado.y %} class="table-success"{% endif %}>
-        <td>({{ v.x|floatformat:2 }}, {{ v.y|floatformat:2 }})</td>
-        <td>{{ v.x|floatformat:2 }}</td>
-        <td>{{ v.y|floatformat:2 }}</td>
-        <td>{{ v.z|floatformat:2 }}</td>
-      </tr>
+        <tr{% if v.x == resultado.x and v.y == resultado.y %} class="table-success"{% endif %}>
+          <td class="text-black dark:text-white">({{ v.x|floatformat:2 }}, {{ v.y|floatformat:2 }})</td>
+          <td class="text-black dark:text-white">{{ v.x|floatformat:2 }}</td>
+          <td class="text-black dark:text-white">{{ v.y|floatformat:2 }}</td>
+          <td class="text-black dark:text-white">{{ v.z|floatformat:2 }}</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>

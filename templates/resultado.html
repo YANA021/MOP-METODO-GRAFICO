@@ -11,23 +11,23 @@
   <div id="plot-controls" class="mt-2">
     <div class="form-check form-check-inline">
       <input class="form-check-input plot-toggle" type="checkbox" id="chk-rest" value="restricciones" checked>
-      <label class="form-check-label" for="chk-rest">Restricciones</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-rest">Restricciones</label>
     </div>
     <div class="form-check form-check-inline">
       <input class="form-check-input plot-toggle" type="checkbox" id="chk-obj" value="objetivo" checked>
-      <label class="form-check-label" for="chk-obj">Función objetivo</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-obj">Función objetivo</label>
     </div>
     <div class="form-check form-check-inline">
       <input class="form-check-input plot-toggle" type="checkbox" id="chk-int" value="intersecciones" checked>
-      <label class="form-check-label" for="chk-int">Puntos de intersección</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-int">Puntos de intersección</label>
     </div>
     <div class="form-check form-check-inline">
       <input class="form-check-input plot-toggle" type="checkbox" id="chk-reg" value="region" checked>
-      <label class="form-check-label" for="chk-reg">Región factible</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-reg">Región factible</label>
     </div>
     <div class="form-check form-check-inline">
       <input class="form-check-input" type="checkbox" id="chk-grid" checked>
-      <label class="form-check-label" for="chk-grid">Cuadrícula</label>
+      <label class="form-check-label text-black dark:text-white" for="chk-grid">Cuadrícula</label>
     </div>
   </div>
   <div class="mt-2 d-flex gap-2">
@@ -45,16 +45,21 @@
   <h5>Vértices</h5>
   <table class="table table-bordered table-sm">
     <thead>
-      <tr><th>Vértice</th><th>x₁</th><th>x₂</th><th>Z</th></tr>
+      <tr>
+        <th class="text-black dark:text-white">Vértice</th>
+        <th class="text-black dark:text-white">x₁</th>
+        <th class="text-black dark:text-white">x₂</th>
+        <th class="text-black dark:text-white">Z</th>
+      </tr>
     </thead>
     <tbody>
       {% for v in resultado.vertices %}
-      <tr{% if v.x == resultado.x and v.y == resultado.y %} class="table-success"{% endif %}>
-        <td>({{ v.x|floatformat:2 }}, {{ v.y|floatformat:2 }})</td>
-        <td>{{ v.x|floatformat:2 }}</td>
-        <td>{{ v.y|floatformat:2 }}</td>
-        <td>{{ v.z|floatformat:2 }}</td>
-      </tr>
+        <tr{% if v.x == resultado.x and v.y == resultado.y %} class="table-success"{% endif %}>
+          <td class="text-black dark:text-white">({{ v.x|floatformat:2 }}, {{ v.y|floatformat:2 }})</td>
+          <td class="text-black dark:text-white">{{ v.x|floatformat:2 }}</td>
+          <td class="text-black dark:text-white">{{ v.y|floatformat:2 }}</td>
+          <td class="text-black dark:text-white">{{ v.z|floatformat:2 }}</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>
