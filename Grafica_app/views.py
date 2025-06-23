@@ -177,8 +177,26 @@ def historial(request):
     if orden not in {"asc", "desc"}:
         orden = "asc"
     ordering = "-created_at" if orden == "desc" else "created_at"
-    problemas = ProblemaPL.objects.filter(user=request.user).order_by(ordering)
-    return render(request, "historial.html", {"problemas": problemas, "orden": orden})
+
+    # Always number problems using their creation order so the enumeration
+    # remains consistent when applying different sort orders. First fetch
+    # all entries ascending by creation date and map each id to its index.
+    base_qs = ProblemaPL.objects.filter(user=request.user).order_by("created_at")
+    numero_por_id = {p.id: idx for idx, p in enumerate(base_qs, 1)}
+
+    # Then obtain the problems in the requested order and attach the
+    # persistent enumeration.
+    problemas = list(
+        ProblemaPL.objects.filter(user=request.user).order_by(ordering)
+    )
+    for p in problemas:
+        p.numero = numero_por_id.get(p.id)
+
+    return render(
+        request,
+        "historial.html",
+        {"problemas": problemas, "orden": orden},
+    )
 
 
 @login_required
