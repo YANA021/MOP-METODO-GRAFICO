@@ -1,10 +1,25 @@
-html.dark .table,
-html.dark .table th,
-html.dark .table td {
-  color: #f9fafb !important;
+.dark-mode .form-control,
+.dark-mode .form-select {
+  background-color: #f5f5f5;
+  color: #000;
 }
 
-html.dark .btn-outline-secondary,
-html.dark .btn-outline-primary {
-  color: #f9fafb !important;
+.dark-mode .form-control::placeholder {
+  color: #6c757d;
+}
+
+/* Dark mode table and buttons */
+.dark-mode .table,
+.dark-mode .table th,
+.dark-mode .table td {
+  color: #212529 !important;
+}
+.dark-mode .btn-outline-secondary,
+.dark-mode .btn-outline-primary {
+  color: #fff !important;
+}
+
+/* Support Tailwind-style dark:text-white utility */
+.dark-mode .dark\:text-white {
+  color: #fff !important;
 }

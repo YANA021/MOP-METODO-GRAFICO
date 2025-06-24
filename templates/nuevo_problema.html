@@ -9,7 +9,7 @@
 {% endif %}
 <form id="pl-form" method="post" class="vstack gap-4">
   {% csrf_token %}
-  <div class="border rounded-3 p-4 mt-3 bg-white dark:bg-gray-800 text-gray-800 dark:text-white">
+  <div class="border rounded-3 p-4 mt-3">
     <div class="mb-3">
       <label class="form-label text-black dark:text-white">Función Objetivo</label>
       <div class="row g-3 align-items-center justify-content-center text-center">
@@ -36,7 +36,7 @@
     <input type="hidden" name="{{ form.restricciones.name }}" id="id_{{ form.restricciones.name }}">
   </div>
 
-  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800">
   <label class="form-label text-black dark:text-white">Rango de valores permitidos para cada variable</label>
     <table class="table table-bordered table-sm mb-2">
       <thead>
@@ -73,29 +73,29 @@
     </table>
   </div>
 
-  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800 dark:bg-gray-800 dark:border-gray-600 dark:text-white" id="restricciones-container">
+  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800" id="restricciones-container">
     <label class="form-label text-black dark:text-white">Restricciones</label>
     <div class="restriccion-row row g-3 align-items-center mb-3 justify-content-center text-center">
       <div class="col-6 col-md-3">
-       <input type="number" step="any" name="coef_x1[]" class="bg-white border border-gray-300 rounded-md p-2 text-gray-800 placeholder-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 w-full" placeholder="Coeficiente de x₁">
+       <input type="number" step="any" name="coef_x1[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₁">
       </div>
       <div class="col-auto">
         <span class="text-black dark:text-white">x₁ +</span>
       </div>
       <div class="col-6 col-md-3">
-        <input type="number" step="any" name="coef_x2[]" class="bg-white border border-gray-300 rounded-md p-2 text-gray-800 placeholder-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 w-full" placeholder="Coeficiente de x₂">      </div>
+        <input type="number" step="any" name="coef_x2[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full" placeholder="Coeficiente de x₂">      </div>
       <div class="col-auto">
         <span class="text-black dark:text-white">x₂</span>
       </div>
       <div class="col-6 col-md-2">
-        <select name="operador[]" class="bg-white border border-gray-300 rounded-md p-2 text-gray-800 dark:bg-gray-800 dark:border-gray-600 dark:text-white w-full">
+        <select name="operador[]" class="bg-gray-100 border border-gray-400 rounded-md p-2 text-gray-800 w-full">
           <option value="<=">≤</option>
           <option value=">=">≥</option>
           <option value="=">=</option>
         </select>
       </div>
       <div class="col-6 col-md-2">
-        <input type="number" step="any" name="valor[]" class="form-control bg-white border-gray-300 text-gray-800 placeholder-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400" placeholder="Valor del lado derecho">
+        <input type="number" step="any" name="valor[]" class="form-control" placeholder="Valor del lado derecho">
       </div>
       <div class="col-auto">
         <button class="btn btn-danger remove-restriccion" type="button"><i class="bi bi-dash-circle"></i></button>
@@ -103,13 +103,13 @@
     </div>
   </div>
   <div>
-     <button id="add-restriccion" type="button" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-md mb-3 dark:bg-blue-500 hover:dark:bg-blue-400">
+     <button id="add-restriccion" type="button" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-md mb-3">
       <i class="fa-solid fa-plus mr-2"></i>
       Agregar nueva restricción
     </button>
   </div>
   <div>
-    <button type="submit" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-md dark:bg-blue-500 hover:dark:bg-blue-400">
+    <button type="submit" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-md">
       <i class="fa-solid fa-chart-line mr-2"></i>
       Resolver y mostrar gráfica
     </button>
@@ -211,21 +211,21 @@ function toggleGraph(tipo) {
       {% for k, v in post_data.items %}
       <input type="hidden" name="{{ k }}" value="{{ v }}">
       {% endfor %}
-      <button class="btn btn-outline-primary dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600" type="submit">Exportar PDF</button>
+      <button class="btn btn-outline-primary" type="submit">Exportar PDF</button>
     </form>
     <form method="post" action="{% url 'exportar_resultado' 'excel' %}">
       {% csrf_token %}
       {% for k, v in post_data.items %}
       <input type="hidden" name="{{ k }}" value="{{ v }}">
       {% endfor %}
-      <button class="btn btn-outline-primary dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600" type="submit">Exportar Excel</button>
+      <button class="btn btn-outline-primary" type="submit">Exportar Excel</button>
     </form>
     <form method="post" action="{% url 'exportar_resultado' 'word' %}">
       {% csrf_token %}
       {% for k, v in post_data.items %}
       <input type="hidden" name="{{ k }}" value="{{ v }}">
       {% endfor %}
-      <button class="btn btn-outline-primary dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600" type="submit">Exportar Word</button>
+      <button class="btn btn-outline-primary" type="submit">Exportar Word</button>
     </form>
   </div>
   {% endif %}
