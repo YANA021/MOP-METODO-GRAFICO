@@ -4,12 +4,12 @@
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
 }
 
 .login-container {
-    background: #222;
-    color: #fff;
+    background: var(--card-bg);
+    color: var(--card-text);
     padding: 2rem;
     border-radius: 0.75rem;
     width: 100%;
@@ -32,7 +32,7 @@
 
 .input-group-text {
     border-radius: 0 0.5rem 0.5rem 0;
-    background: #fff;
+    background: var(--card-bg);
 }
 
 .btn-primary {
