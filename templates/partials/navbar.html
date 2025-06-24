@@ -36,23 +36,7 @@
           </ul>
         </li>
         <li class="nav-item d-flex align-items-center ms-3">
-          <div class="form-check form-switch text-light">
-            <input class="form-check-input" type="checkbox" id="modeSwitch">
-             <script>
-              (function() {
-                const pref = localStorage.getItem('darkMode');
-                const input = document.getElementById('modeSwitch');
-                if (input) {
-                  input.checked = pref === 'true';
-                  const label = document.querySelector('label[for="modeSwitch"]');
-                  if (label) {
-                    label.textContent = pref === 'true' ? 'Modo oscuro' : 'Modo claro';
-                  }
-                }
-              })();
-            </script>
-            <label class="form-check-label" for="modeSwitch">Modo claro</label>
-          </div>
+          <button id="theme-switch" type="button" class="btn btn-outline-secondary px-3 py-1">🌙</button>
         </li>
       </ul>
     </div>
