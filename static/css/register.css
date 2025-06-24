@@ -4,12 +4,12 @@
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    background: var(--alt-bg);
+    background: #e9f3ff;
 }
 
 .register-container {
-    background: var(--card-bg);
-    color: var(--card-text);
+    background: #292929;
+    color: #fff;
     padding: 2rem;
     border-radius: 0.75rem;
     width: 100%;
