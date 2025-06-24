@@ -9,19 +9,27 @@ class ProblemaPLForm(forms.Form):
         ("min", "Minimizar"),
     ]
 
+    base_input_classes = (
+        "form-control bg-white border-gray-300 text-gray-800 placeholder-gray-500 "
+        "dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+    )
+
     objetivo = forms.ChoiceField(
-        choices=OBJETIVO_CHOICES, widget=forms.Select(attrs={"class": "form-select"})
+        choices=OBJETIVO_CHOICES,
+        widget=forms.Select(
+            attrs={"class": "form-select bg-white border-gray-300 text-gray-800 dark:bg-gray-800 dark:border-gray-600 dark:text-white"}
+        ),
     )
     coef_x1 = forms.FloatField(
         label="Coeficiente x1",
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Coeficiente de x₁"}
+            attrs={"class": base_input_classes, "placeholder": "Coeficiente de x₁"}
         ),
     )
     coef_x2 = forms.FloatField(
         label="Coeficiente x2",
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Coeficiente de x₂"}
+            attrs={"class": base_input_classes, "placeholder": "Coeficiente de x₂"}
         ),
     )
     x1_min = forms.FloatField(
@@ -29,14 +37,14 @@ class ProblemaPLForm(forms.Form):
         required=False,
         initial=0,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Mínimo permitido para x₁"}
+            attrs={"class": base_input_classes, "placeholder": "Mínimo permitido para x₁"}
         ),
     )
     x1_max = forms.FloatField(
         label="Valor máximo para x1",
         required=False,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Valor máximo permitido para x₁"}
+            attrs={"class": base_input_classes, "placeholder": "Valor máximo permitido para x₁"}
         ),
     )
     x2_min = forms.FloatField(
@@ -44,14 +52,14 @@ class ProblemaPLForm(forms.Form):
         required=False,
         initial=0,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Mínimo permitido para x₂"}
+            attrs={"class": base_input_classes, "placeholder": "Mínimo permitido para x₂"}
         ),
     )
     x2_max = forms.FloatField(
         label="Valor máximo para x2",
         required=False,
         widget=forms.NumberInput(
-            attrs={"class": "form-control", "placeholder": "Máximo permitido para x₂"}
+            attrs={"class": base_input_classes, "placeholder": "Máximo permitido para x₂"}
         ),
     )
     restricciones = forms.CharField(widget=forms.HiddenInput())
@@ -100,10 +108,10 @@ class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["username"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Usuario"}
+            {"class": base_input_classes, "placeholder": "Usuario"}
         )
         self.fields["password"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Contraseña", "id": "password"}
+            {"class": base_input_classes, "placeholder": "Contraseña", "id": "password"}
         )
 
 
@@ -119,16 +127,16 @@ class RegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["username"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Usuario"}
+            {"class": base_input_classes, "placeholder": "Usuario"}
         )
         self.fields["email"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Email"}
+            {"class": base_input_classes, "placeholder": "Email"}
         )
         self.fields["password1"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Contraseña"}
+            {"class": base_input_classes, "placeholder": "Contraseña"}
         )
         self.fields["password2"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Confirmar contraseña"}
+            {"class": base_input_classes, "placeholder": "Confirmar contraseña"}
         )
 
 
@@ -142,8 +150,8 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["username"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Usuario"}
+            {"class": base_input_classes, "placeholder": "Usuario"}
         )
         self.fields["email"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Email"}
+            {"class": base_input_classes, "placeholder": "Email"}
         )
