@@ -8,6 +8,8 @@
   --bg-gradient-start: #f8f9fa;
   --bg-gradient-end: #e9ecef;
   --alt-bg: #e9f3ff;
+  --bs-body-bg: var(--bg-default);
+  --bs-body-color: var(--primary-text);
 }
 
 .dark-mode {
@@ -19,6 +21,8 @@
   --bg-gradient-start: #343a40;
   --bg-gradient-end: #212529;
   --alt-bg: #212529;
+  --bs-body-bg: var(--bg-default);
+  --bs-body-color: var(--primary-text);
 }
 
 body {
@@ -30,6 +34,10 @@ body {
 .dark-mode .form-select {
   background-color: var(--card-bg);
   color: var(--card-text);
+}
+
+.dark-mode .form-check-label {
+  color: var(--primary-text);
 }
 
 .dark-mode .form-control::placeholder {
