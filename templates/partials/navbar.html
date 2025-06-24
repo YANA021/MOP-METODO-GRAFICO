@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white dark:navbar-dark dark:bg-gray-900 fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">MOP</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,21 +36,8 @@
           </ul>
         </li>
         <li class="nav-item d-flex align-items-center ms-3">
-          <div class="form-check form-switch text-light">
+          <div class="form-check form-switch text-gray-900 dark:text-gray-100">
             <input class="form-check-input" type="checkbox" id="modeSwitch">
-             <script>
-              (function() {
-                const pref = localStorage.getItem('darkMode');
-                const input = document.getElementById('modeSwitch');
-                if (input) {
-                  input.checked = pref === 'true';
-                  const label = document.querySelector('label[for="modeSwitch"]');
-                  if (label) {
-                    label.textContent = pref === 'true' ? 'Modo oscuro' : 'Modo claro';
-                  }
-                }
-              })();
-            </script>
             <label class="form-check-label" for="modeSwitch">Modo claro</label>
           </div>
         </li>

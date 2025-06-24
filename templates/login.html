@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 {% block content %}
-<div class="login-page">
-  <form class="login-container" method="post">
+<div class="login-page bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+  <form class="login-container bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" method="post">
     {% csrf_token %}
     <h2 class="text-center mb-4">Iniciar sesión</h2>
      {% if form.non_field_errors %}
