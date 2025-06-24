@@ -6,8 +6,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<div class="register-page bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-  <form class="register-container bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" method="post">
+<div class="register-page">
+  <form class="register-container" method="post">
      {% csrf_token %}
     <h2 class="text-center mb-4">{{ title }}</h2>
     {% if form.errors %}
