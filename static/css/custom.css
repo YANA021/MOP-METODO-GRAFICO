@@ -1,53 +1,25 @@
-/* Theme variables */
-:root {
-  --bg-default: #ffffff;
-  --primary-text: #212529;
-  --border-color: #dee2e6;
-  --card-bg: #ffffff;
-  --card-text: #212529;
-  --bg-gradient-start: #f8f9fa;
-  --bg-gradient-end: #e9ecef;
-  --alt-bg: #e9f3ff;
-}
-
-.dark-mode {
-  --bg-default: #212529;
-  --primary-text: #f8f9fa;
-  --border-color: #495057;
-  --card-bg: #343a40;
-  --card-text: #f8f9fa;
-  --bg-gradient-start: #343a40;
-  --bg-gradient-end: #212529;
-  --alt-bg: #212529;
-}
-
-body {
-  background-color: var(--bg-default);
-  color: var(--primary-text);
-}
-
 .dark-mode .form-control,
 .dark-mode .form-select {
-  background-color: var(--card-bg);
-  color: var(--card-text);
+  background-color: #f5f5f5;
+  color: #000;
 }
 
 .dark-mode .form-control::placeholder {
-  color: #adb5bd;
+  color: #6c757d;
 }
 
 /* Dark mode table and buttons */
 .dark-mode .table,
 .dark-mode .table th,
 .dark-mode .table td {
-  color: var(--primary-text) !important;
+  color: #212529 !important;
 }
 .dark-mode .btn-outline-secondary,
 .dark-mode .btn-outline-primary {
-  color: var(--card-text) !important;
+  color: #fff !important;
 }
 
 /* Support Tailwind-style dark:text-white utility */
 .dark-mode .dark\:text-white {
-  color: var(--card-text) !important;
+  color: #fff !important;
 }
