@@ -9,25 +9,19 @@ class ProblemaPLForm(forms.Form):
         ("min", "Minimizar"),
     ]
 
-    input_classes = (
-        "form-control bg-white border-gray-300 text-gray-800 placeholder-gray-500 "
-        "dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
-    )
-
     objetivo = forms.ChoiceField(
-        choices=OBJETIVO_CHOICES,
-        widget=forms.Select(attrs={"class": "form-select " + input_classes})
+        choices=OBJETIVO_CHOICES, widget=forms.Select(attrs={"class": "form-select"})
     )
     coef_x1 = forms.FloatField(
         label="Coeficiente x1",
         widget=forms.NumberInput(
-            attrs={"class": input_classes, "placeholder": "Coeficiente de x₁"}
+            attrs={"class": "form-control", "placeholder": "Coeficiente de x₁"}
         ),
     )
     coef_x2 = forms.FloatField(
         label="Coeficiente x2",
         widget=forms.NumberInput(
-            attrs={"class": input_classes, "placeholder": "Coeficiente de x₂"}
+            attrs={"class": "form-control", "placeholder": "Coeficiente de x₂"}
         ),
     )
     x1_min = forms.FloatField(
@@ -35,14 +29,14 @@ class ProblemaPLForm(forms.Form):
         required=False,
         initial=0,
         widget=forms.NumberInput(
-            attrs={"class": input_classes, "placeholder": "Mínimo permitido para x₁"}
+            attrs={"class": "form-control", "placeholder": "Mínimo permitido para x₁"}
         ),
     )
     x1_max = forms.FloatField(
         label="Valor máximo para x1",
         required=False,
         widget=forms.NumberInput(
-            attrs={"class": input_classes, "placeholder": "Valor máximo permitido para x₁"}
+            attrs={"class": "form-control", "placeholder": "Valor máximo permitido para x₁"}
         ),
     )
     x2_min = forms.FloatField(
@@ -50,14 +44,14 @@ class ProblemaPLForm(forms.Form):
         required=False,
         initial=0,
         widget=forms.NumberInput(
-            attrs={"class": input_classes, "placeholder": "Mínimo permitido para x₂"}
+            attrs={"class": "form-control", "placeholder": "Mínimo permitido para x₂"}
         ),
     )
     x2_max = forms.FloatField(
         label="Valor máximo para x2",
         required=False,
         widget=forms.NumberInput(
-            attrs={"class": input_classes, "placeholder": "Máximo permitido para x₂"}
+            attrs={"class": "form-control", "placeholder": "Máximo permitido para x₂"}
         ),
     )
     restricciones = forms.CharField(widget=forms.HiddenInput())
