@@ -28,8 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const clone = first.cloneNode(true);
     clone.querySelectorAll('input').forEach(input => (input.value = ''));
     clone.querySelector('select').value = '<=';
+    clone.classList.add('fade-in');
     container.appendChild(clone);
     updateRemoveButtons();
+    bootstrap.Tooltip.getOrCreateInstance(clone.querySelector('[data-bs-toggle="tooltip"]'));
   });
 
   updateRemoveButtons();

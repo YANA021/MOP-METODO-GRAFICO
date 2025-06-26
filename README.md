@@ -50,3 +50,9 @@ La vista cartesiana ahora permite acercar una región dibujando un rectángulo.
 Esto se logra habilitando `dragmode="zoom"` y evitando fijar la proporción de
 los ejes, por lo que el usuario puede seleccionar libremente el área de interés
 y mantener el nivel de zoom hasta que decida restablecerlo.
+
+## Interfaz mejorada
+
+El proyecto incluye un modo claro/oscuro que detecta automáticamente la preferencia del sistema.
+Las transiciones entre modos son suaves y el contenido principal se presenta dentro de tarjetas con efecto *glassmorphism*.
+Al añadir restricciones se muestra una animación de aparición y la interfaz despliega un spinner mientras se procesan los formularios.

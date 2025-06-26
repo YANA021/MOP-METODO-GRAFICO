@@ -18,10 +18,18 @@
     }
   }
 
-  // Apply preference as soon as the script loads
+  // Determine initial mode based on stored value or system preference
   const savedPreference = localStorage.getItem('darkMode');
-  const darkEnabledInit = savedPreference === 'true';
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const darkEnabledInit = savedPreference === null ? systemPrefersDark : savedPreference === 'true';
   applyDarkMode(darkEnabledInit);
+
+  // Listen for system preference changes when user has no explicit choice
+  if (savedPreference === null) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      applyDarkMode(e.matches);
+    });
+  }
 
   document.addEventListener('DOMContentLoaded', function () {
     const switchInput = document.getElementById('modeSwitch');
