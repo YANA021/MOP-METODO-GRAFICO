@@ -11,7 +11,7 @@
   --bg-gradient-end: #e9ecef;
   --alt-bg: #e9f3ff;
   --bs-body-bg: var(--bg-default);
-  --bs-body-color: var(--primary-text);
+  --bs-body-color: var(--primary-text) !important;;
 }
 
 .dark-mode {
@@ -26,12 +26,12 @@
   --bg-gradient-end: #212529;
   --alt-bg: #212529;
   --bs-body-bg: var(--bg-default);
-  --bs-body-color: var(--primary-text);
+  --bs-body-color: var(--primary-text) !important;;
 }
 
 body {
   background-color: var(--bg-default);
-  color: var(--primary-text);
+  color: var(--primary-text) !important;;
 }
 
 .dark-mode .form-control,
@@ -41,7 +41,7 @@ body {
 }
 
 .dark-mode .form-check-label {
-  color: var(--primary-text);
+  color: var(--primary-text) !important;;
 }
 
 .dark-mode .form-control::placeholder {
