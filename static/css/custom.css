@@ -71,3 +71,11 @@ body {
 .dark-mode .dark\:text-white {
   color: var(--card-text) !important;
 }
+
+/* Generic container that adapts to light/dark mode */
+.themed-card {
+  background-color: var(--card-bg);
+  color: var(--card-text);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+}

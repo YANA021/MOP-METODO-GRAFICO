@@ -9,7 +9,7 @@
 {% endif %}
 <form id="pl-form" method="post" class="vstack gap-4">
   {% csrf_token %}
-  <div class="border rounded-3 p-4 mt-3">
+  <div class="themed-card p-4 mt-3">
     <div class="mb-3">
       <label class="form-label text-black dark:text-white">Función Objetivo</label>
       <div class="row g-3 align-items-center justify-content-center text-center">
@@ -36,44 +36,39 @@
     <input type="hidden" name="{{ form.restricciones.name }}" id="id_{{ form.restricciones.name }}">
   </div>
 
-  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800">
+  <div class="themed-card p-4 mt-4">
   <label class="form-label text-black dark:text-white">Rango de valores permitidos para cada variable</label>
-    <table class="table table-bordered table-sm mb-2">
-      <thead>
-          <tr>
-            <th class="text-black dark:text-white">Variable</th>
-            <th class="text-black dark:text-white">Mínimo</th>
-            <th class="text-black dark:text-white">Máximo</th>
-          </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="text-black dark:text-white">x₁</td>
-          <td>
-            <label class="form-label small visually-hidden" for="{{ form.x1_min.id_for_label }}">{{ form.x1_min.label }}</label>
-            {{ form.x1_min }}
-          </td>
-          <td>
-            <label class="form-label small visually-hidden" for="{{ form.x1_max.id_for_label }}">{{ form.x1_max.label }}</label>
-            {{ form.x1_max }}
-          </td>
-        </tr>
-        <tr>
-          <td class="text-black dark:text-white">x₂</td>
-          <td>
-            <label class="form-label small visually-hidden" for="{{ form.x2_min.id_for_label }}">{{ form.x2_min.label }}</label>
-            {{ form.x2_min }}
-          </td>
-          <td>
-            <label class="form-label small visually-hidden" for="{{ form.x2_max.id_for_label }}">{{ form.x2_max.label }}</label>
-             {{ form.x2_max }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="vstack gap-3">
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <span class="text-black dark:text-white">x₁</span>
+        </div>
+        <div class="col">
+          <label class="form-label small visually-hidden" for="{{ form.x1_min.id_for_label }}">{{ form.x1_min.label }}</label>
+          {{ form.x1_min }}
+        </div>
+        <div class="col">
+          <label class="form-label small visually-hidden" for="{{ form.x1_max.id_for_label }}">{{ form.x1_max.label }}</label>
+          {{ form.x1_max }}
+        </div>
+      </div>
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <span class="text-black dark:text-white">x₂</span>
+        </div>
+        <div class="col">
+          <label class="form-label small visually-hidden" for="{{ form.x2_min.id_for_label }}">{{ form.x2_min.label }}</label>
+          {{ form.x2_min }}
+        </div>
+        <div class="col">
+          <label class="form-label small visually-hidden" for="{{ form.x2_max.id_for_label }}">{{ form.x2_max.label }}</label>
+          {{ form.x2_max }}
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6 mt-4 text-gray-800" id="restricciones-container">
+  <div class="themed-card p-6 mt-4" id="restricciones-container">
     <label class="form-label text-black dark:text-white">Restricciones</label>
     <div class="restriccion-row row g-3 align-items-center mb-3 justify-content-center text-center">
       <div class="col-6 col-md-3">
